@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -26,6 +28,9 @@ import com.codepath.simpleinsta.R;
 import com.codepath.simpleinsta.ui.login.LoginViewModel;
 import com.codepath.simpleinsta.ui.login.LoginViewModelFactory;
 import com.codepath.simpleinsta.databinding.ActivityLoginBinding;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -41,6 +46,9 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
+        if(ParseUser.getCurrentUser() != null) {
+            goMainActivity();
+        }
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
@@ -116,19 +124,38 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
+//                loadingProgressBar.setVisibility(View.VISIBLE);
+                loginUser(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+                String username = usernameEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
             }
         });
     }
 
+    private void loginUser(String username, String password) {
+        // TODO : initiate successful logged in experience
+        ParseUser.logInInBackground(username, password, new LogInCallback() {
+            @Override
+            public void done(ParseUser user, ParseException e) {
+                if (e != null) {
+                    Log.e("error","Issue with login", e);
+                    return;
+                }
+                //if it succeeded we navigate to the Main Activity
+                goMainActivity();
+            }
+        });
+    }
+    private void goMainActivity(){
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+        finish();
+    }
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
-
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
