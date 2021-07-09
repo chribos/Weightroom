@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                 .get(LoginViewModel.class);
 
         if(ParseUser.getCurrentUser() != null) {
-            goMainActivity();
+            goFeedActivity();
         }
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
@@ -143,11 +143,11 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 //if it succeeded we navigate to the Main Activity
-                goMainActivity();
+                goFeedActivity();
             }
         });
     }
-    private void goMainActivity(){
+    private void goFeedActivity(){
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
