@@ -68,7 +68,6 @@ public class MainActivity  extends AppCompatActivity {
                         break;
                     case R.id.action_profile:
                     default:
-                        //TODO: Update fragment
                         fragment = new ProfileFragment();
                         break;
                 }
