@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SimpleInsta</string>
+    <string name="app_name">Weightroom</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Username</string>
     <string name="prompt_password">Password</string>

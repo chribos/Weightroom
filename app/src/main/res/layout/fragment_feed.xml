@@ -11,9 +11,11 @@
         android:layout_width="411dp"
         android:layout_height="653dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="-4dp"
-        android:layout_marginBottom="0dp">
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="76dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPosts"
@@ -22,37 +24,5 @@
             android:layout_centerInParent="true"
             android:padding="8dp" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="87dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="-13dp"
-        android:src="@drawable/nav_logo_whiteout" />
-
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="46dp"
-        android:layout_height="47dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="21dp"
-        android:backgroundTint="#006A3D3D"
-        android:src="@drawable/ufi_new_direct" />
-
-    <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="84dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="-7dp"
-        android:backgroundTint="#00FFFFFF"
-        android:src="@android:drawable/ic_menu_camera" />
 
 </RelativeLayout>
