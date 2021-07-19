@@ -31,7 +31,7 @@ public class DetailsActivity extends AppCompatActivity {
         tvMedia = findViewById(R.id.tvMedia);
         ivImage = findViewById(R.id.ivImage);
         tvDescription = findViewById(R.id.exDescription);
-        tvUsername = findViewById(R.id.exName);
+        tvUsername = findViewById(R.id.exTitle);
         relTime = findViewById(R.id.relTime);
         tvDescription.setText(exercise.getDescription());
         tvUsername.setText(exercise.getUser().getUsername());

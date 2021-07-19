@@ -121,7 +121,7 @@ public class FeedFragment extends Fragment {
                 try {
                     JSONArray results = jsonObject.getJSONArray("results");
                     Log.i(TAG, "Results" + results.toString());
-//                    allExercises.addAll(Exercise.fromJsonArray(results));
+                    allExercises.addAll(Exercise.fromJsonArray(results));
                     ExercisesAdapter.notifyDataSetChanged();
                     Log.i(TAG, "Exercises" + allExercises.size());
                 } catch (JSONException e) {

@@ -7,7 +7,13 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @ParseClassName("Post")
 public class Exercise extends ParseObject {
@@ -15,7 +21,26 @@ public class Exercise extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
+    String exTitle;
 
+    public Exercise() {}
+    public Exercise(JSONObject exercise) throws JSONException {
+        exTitle = exercise.getString("name");
+    }
+
+    //turn array into list of movies
+    public static List<Exercise> fromJsonArray(JSONArray exerciseJsonArray) throws JSONException {
+        List<Exercise> exercises = new ArrayList<>();
+        for (int i =0; i<exerciseJsonArray.length(); i++) {
+            //add movie at each position of array
+            exercises.add(new Exercise(exerciseJsonArray.getJSONObject(i)));
+        }
+        return exercises;
+    }
+
+    public String getExTitle() {
+        return exTitle;
+    }
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);

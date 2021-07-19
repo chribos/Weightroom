@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.codepath.Weightroom.R;
 import com.parse.ParseFile;
 
@@ -49,7 +48,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_exercise, parent, false);
         return new ViewHolder(view);
     }
 
@@ -61,14 +60,16 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView exName;
+//        previously name of the user, now title of the exercise, exTitle
+//        private TextView exName;
+        private TextView exTitle;
         private TextView exDescription;
         private LinearLayout tvMedia;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            exName = itemView.findViewById(R.id.exName);
+            exTitle = itemView.findViewById(R.id.exTitle);
             exDescription = itemView.findViewById(R.id.exDescription);
             tvMedia = itemView.findViewById(R.id.tvMedia);
 
@@ -79,7 +80,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
             String timeAgo = Exercise.calculateTimeAgo(createdAt);
             // Bind the post data to the view elements
             exDescription.setText(exercise.getDescription());
-            exName.setText(exercise.getUser().getUsername());
+            exTitle.setText(exercise.getExTitle());
             ParseFile image = exercise.getImage();
             tvMedia.setOnClickListener(new View.OnClickListener() {
                 @Override
