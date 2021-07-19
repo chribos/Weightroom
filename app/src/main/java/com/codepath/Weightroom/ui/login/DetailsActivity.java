@@ -14,7 +14,7 @@ import com.parse.ParseFile;
 import org.parceler.Parcels;
 
 public class DetailsActivity extends AppCompatActivity {
-    Post post;
+    Exercise exercise;
     ImageView ivImage;
     TextView tvUsername;
     TextView tvDescription;
@@ -27,16 +27,16 @@ public class DetailsActivity extends AppCompatActivity {
         //set content view only needs to be called once at the top
         setContentView(R.layout.activity_details);
 
-        post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
+        exercise = Parcels.unwrap(getIntent().getParcelableExtra("post"));
         tvMedia = findViewById(R.id.tvMedia);
         ivImage = findViewById(R.id.ivImage);
-        tvDescription = findViewById(R.id.tvDescription);
-        tvUsername = findViewById(R.id.tvUsername);
+        tvDescription = findViewById(R.id.exDescription);
+        tvUsername = findViewById(R.id.exName);
         relTime = findViewById(R.id.relTime);
-        tvDescription.setText(post.getDescription());
-        tvUsername.setText(post.getUser().getUsername());
-        relTime.setText(post.calculateTimeAgo(post.getCreatedAt()));
-        ParseFile image = post.getImage();
+        tvDescription.setText(exercise.getDescription());
+        tvUsername.setText(exercise.getUser().getUsername());
+        relTime.setText(exercise.calculateTimeAgo(exercise.getCreatedAt()));
+        ParseFile image = exercise.getImage();
         //load imageurl with Glide (included in build gradle already)
         Glide.with(this).load(image.getUrl()).into(ivImage);
 

@@ -2,7 +2,7 @@ package com.codepath.Weightroom.ui.login.fragments;
 
 import android.util.Log;
 
-import com.codepath.Weightroom.ui.login.Post;
+import com.codepath.Weightroom.ui.login.Exercise;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -20,19 +20,19 @@ public class ProfileFragment extends FeedFragment {
     @Override
     protected void queryPosts() {
         // specify what type of data we want to query - Post.class
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        ParseQuery<Exercise> query = ParseQuery.getQuery(Exercise.class);
         // include data referred by user key
-        query.include(Post.KEY_USER);
+        query.include(Exercise.KEY_USER);
         //filter by user profile instead of all posts!!!
-        query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        query.whereEqualTo(Exercise.KEY_USER, ParseUser.getCurrentUser());
         // limit query to latest 20 items
         query.setLimit(20);
         // order posts by creation date (newest first)
         query.addDescendingOrder("createdAt");
         // start an asynchronous call for posts
-        query.findInBackground(new FindCallback<Post>() {
+        query.findInBackground(new FindCallback<Exercise>() {
             @Override
-            public void done(List<Post> posts, ParseException e) {
+            public void done(List<Exercise> exercises, ParseException e) {
                 // check for errors
                 if (e != null) {
                     Log.e(TAG, "Issue with getting posts", e);
@@ -40,13 +40,13 @@ public class ProfileFragment extends FeedFragment {
                 }
 
                 // for debugging purposes let's print every post description to logcat
-                for (Post post : posts) {
-                    Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
+                for (Exercise exercise : exercises) {
+                    Log.i(TAG, "Post: " + exercise.getDescription() + ", username: " + exercise.getUser().getUsername());
                 }
 
                 // save received posts to list and notify adapter of new data
-                allPosts.addAll(posts);
-                adapter.notifyDataSetChanged();
+                allExercises.addAll(exercises);
+                ExercisesAdapter.notifyDataSetChanged();
             }
         });
     }

@@ -13,18 +13,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.codepath.Weightroom.R;
-import com.codepath.Weightroom.ui.login.Post;
-import com.codepath.Weightroom.ui.login.PostsAdapter;
+import com.codepath.Weightroom.ui.login.Exercise;
+import com.codepath.Weightroom.ui.login.ExercisesAdapter;
+
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Headers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,11 +41,13 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class FeedFragment extends Fragment {
-    protected List<Post> allPosts;
-    public RecyclerView rvPosts;
+    protected List<Exercise> allExercises;
+    public RecyclerView rvExercises;
+    public static final String EXERCISE_INFO_URL = "https://wger.de/api/v2/exerciseinfo/?format=json&language=2";
+
     private String TAG = "FeedFragment";
-    private SwipeRefreshLayout swipeContainer;
-    protected PostsAdapter adapter;
+    protected ExercisesAdapter ExercisesAdapter;
+    protected ImageView homeIcon;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -90,51 +101,59 @@ public class FeedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         //refresh
         // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        homeIcon = view.findViewById(R.id.homeIcon);
         // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                adapter.clear();
-                queryPosts();
-                swipeContainer.setRefreshing(false);
-            }
-        });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-
-        rvPosts = view.findViewById(R.id.rvPosts);
+        rvExercises = view.findViewById(R.id.rvExercises);
 
         // initialize the array that will hold posts and create a PostsAdapter
-        allPosts = new ArrayList<>();
-        adapter = new PostsAdapter(getContext(), allPosts);
+        allExercises = new ArrayList<>();
+        ExercisesAdapter = new ExercisesAdapter(getContext(), allExercises);
+
 
         // set the adapter on the recycler view
-        rvPosts.setAdapter(adapter);
+        rvExercises.setAdapter(ExercisesAdapter);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(EXERCISE_INFO_URL, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Headers headers, JSON json) {
+                Log.d(TAG, "onSuccess");
+                JSONObject jsonObject= json.jsonObject;
+                try {
+                    JSONArray results = jsonObject.getJSONArray("results");
+                    Log.i(TAG, "Results" + results.toString());
+//                    allExercises.addAll(Exercise.fromJsonArray(results));
+                    ExercisesAdapter.notifyDataSetChanged();
+                    Log.i(TAG, "Exercises" + allExercises.size());
+                } catch (JSONException e) {
+                    Log.e(TAG, "Hit json exception", e);
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int i, Headers headers, String s, Throwable throwable) {
+                Log.d(TAG, "onFailure");
+            }
+        });
         // set the layout manager on the recycler view
-        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvExercises.setLayoutManager(new LinearLayoutManager(getContext()));
         // query posts from Parstagram
-        queryPosts();
+//        queryPosts();
     }
 
     protected void queryPosts() {
         // specify what type of data we want to query - Post.class
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        ParseQuery<Exercise> query = ParseQuery.getQuery(Exercise.class);
         // include data referred by user key
-        query.include(Post.KEY_USER);
+        query.include(Exercise.KEY_USER);
         // limit query to latest 20 items
         query.setLimit(20);
         // order posts by creation date (newest first)
         query.addDescendingOrder("createdAt");
         // start an asynchronous call for posts
-        query.findInBackground(new FindCallback<Post>() {
+        query.findInBackground(new FindCallback<Exercise>() {
             @Override
-            public void done(List<Post> posts, ParseException e) {
+            public void done(List<Exercise> exercises, ParseException e) {
                 // check for errors
                 if (e != null) {
                     Log.e(TAG, "Issue with getting posts", e);
@@ -142,13 +161,13 @@ public class FeedFragment extends Fragment {
                 }
 
                 // for debugging purposes let's print every post description to logcat
-                for (Post post : posts) {
-                    Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
+                for (Exercise exercise : exercises) {
+                    Log.i(TAG, "Post: " + exercise.getDescription() + ", username: " + exercise.getUser().getUsername());
                 }
 
                 // save received posts to list and notify adapter of new data
-                allPosts.addAll(posts);
-                adapter.notifyDataSetChanged();
+                allExercises.addAll(exercises);
+                ExercisesAdapter.notifyDataSetChanged();
             }
         });
     }

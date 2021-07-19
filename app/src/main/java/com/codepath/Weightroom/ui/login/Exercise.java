@@ -10,7 +10,7 @@ import com.parse.ParseUser;
 import java.util.Date;
 
 @ParseClassName("Post")
-public class Post extends ParseObject {
+public class Exercise extends ParseObject {
 
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGE = "image";

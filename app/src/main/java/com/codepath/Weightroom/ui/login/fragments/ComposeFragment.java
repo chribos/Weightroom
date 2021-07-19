@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.codepath.Weightroom.R;
 import com.codepath.Weightroom.ui.login.LoginActivity;
-import com.codepath.Weightroom.ui.login.Post;
+import com.codepath.Weightroom.ui.login.Exercise;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -219,12 +219,12 @@ public class ComposeFragment extends Fragment {
 
     //method for saving post to DB
     private void savePost(String description, ParseUser currentUser, File photoFile) {
-        Post post = new Post();
-        post.setDescription(description);
-        post.setImage(new ParseFile(photoFile));
-        post.setUser(currentUser);
+        Exercise exercise = new Exercise();
+        exercise.setDescription(description);
+        exercise.setImage(new ParseFile(photoFile));
+        exercise.setUser(currentUser);
         //saves post to database
-        post.saveInBackground(new SaveCallback() {
+        exercise.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e!= null) {
@@ -244,21 +244,21 @@ public class ComposeFragment extends Fragment {
     }
     //this command retrieves a query of all posts in DB
     private void queryPosts() {
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        ParseQuery<Exercise> query = ParseQuery.getQuery(Exercise.class);
 
         //include user information in query to get author of post
-        query.include(Post.KEY_USER);
+        query.include(Exercise.KEY_USER);
 
-        query.findInBackground(new FindCallback<Post>() {
+        query.findInBackground(new FindCallback<Exercise>() {
             @Override
-            public void done(List<Post> posts, ParseException e) {
+            public void done(List<Exercise> exercises, ParseException e) {
                 if (e!= null) {
                     Log.e(TAG, "issue with getting posts", e);
                     return;
                 }
                 //iterate through posts if successful and
-                for (Post post: posts) {
-                    Log.i(TAG, "post:" + post.getDescription()+ "user:"+ post.getUser().getUsername());
+                for (Exercise exercise : exercises) {
+                    Log.i(TAG, "post:" + exercise.getDescription()+ "user:"+ exercise.getUser().getUsername());
                 }
             }
         });

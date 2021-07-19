@@ -9,30 +9,18 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvUsername"
+        android:id="@+id/exName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         tools:text="rahul" />
 
-    <ImageView
-        android:id="@+id/ivImage"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:scaleType="centerCrop"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <TextView
-        android:id="@+id/tvDescription"
+        android:id="@+id/exDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         tools:text="trying to look hipster" />
 
-    <TextView
-        android:id="@+id/relTime"
-        android:layout_width="81dp"
-        android:layout_height="29dp"
-        android:text="hi" />
 </LinearLayout>
