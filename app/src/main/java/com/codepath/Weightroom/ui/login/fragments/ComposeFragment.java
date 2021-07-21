@@ -138,7 +138,7 @@ public class ComposeFragment extends Fragment {
                     return;
                 }
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                savePost(description, currentUser, photoFile);
+//                savePost(description, currentUser, photoFile);
             }
 
         });
@@ -218,53 +218,53 @@ public class ComposeFragment extends Fragment {
     }
 
     //method for saving post to DB
-    private void savePost(String description, ParseUser currentUser, File photoFile) {
-        Exercise exercise = new Exercise();
-        exercise.setDescription(description);
-        exercise.setImage(new ParseFile(photoFile));
-        exercise.setUser(currentUser);
-        //saves post to database
-        exercise.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e!= null) {
-                    Log.e(TAG, "issue with saving posts", e);
-                    Toast.makeText(getContext(), "Error saving post", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Log.i(TAG, "post saved!", e);
-                Toast.makeText(getContext(), "Post saved!", Toast.LENGTH_SHORT).show();
-                etDescription.setText("");
-                //empty image
-                ivPostImage.setImageResource(0);
-
-            }
-        });
-
-    }
+//    private void savePost(String description, ParseUser currentUser, File photoFile) {
+//        Exercise exercise = new Exercise();
+//        exercise.setDescription(description);
+//        exercise.setImage(new ParseFile(photoFile));
+//        exercise.setUser(currentUser);
+//        //saves post to database
+//        exercise.saveInBackground(new SaveCallback() {
+//            @Override
+//            public void done(ParseException e) {
+//                if (e!= null) {
+//                    Log.e(TAG, "issue with saving posts", e);
+//                    Toast.makeText(getContext(), "Error saving post", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                Log.i(TAG, "post saved!", e);
+//                Toast.makeText(getContext(), "Post saved!", Toast.LENGTH_SHORT).show();
+//                etDescription.setText("");
+//                //empty image
+//                ivPostImage.setImageResource(0);
+//
+//            }
+//        });
+//
+//    }
     //this command retrieves a query of all posts in DB
-    private void queryPosts() {
-        ParseQuery<Exercise> query = ParseQuery.getQuery(Exercise.class);
-
-        //include user information in query to get author of post
-        query.include(Exercise.KEY_USER);
-
-        query.findInBackground(new FindCallback<Exercise>() {
-            @Override
-            public void done(List<Exercise> exercises, ParseException e) {
-                if (e!= null) {
-                    Log.e(TAG, "issue with getting posts", e);
-                    return;
-                }
-                //iterate through posts if successful and
-                for (Exercise exercise : exercises) {
-                    Log.i(TAG, "post:" + exercise.getDescription()+ "user:"+ exercise.getUser().getUsername());
-                }
-            }
-        });
-
-
-    }
+//    private void queryPosts() {
+//        ParseQuery<Exercise> query = ParseQuery.getQuery(Exercise.class);
+//
+//        //include user information in query to get author of post
+////        query.include(Exercise.KEY_USER);
+//
+//        query.findInBackground(new FindCallback<Exercise>() {
+//            @Override
+//            public void done(List<Exercise> exercises, ParseException e) {
+//                if (e!= null) {
+//                    Log.e(TAG, "issue with getting posts", e);
+//                    return;
+//                }
+//                //iterate through posts if successful and
+//                for (Exercise exercise : exercises) {
+////                    Log.i(TAG, "post:" + exercise.getDescription()+ "user:"+ exercise.getUser().getUsername());
+//                }
+//            }
+//        });
+//
+//
+//    }
     private void goLoginActivity() {
         Intent i = new Intent(getContext(), LoginActivity.class);
         startActivity(i);

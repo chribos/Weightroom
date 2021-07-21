@@ -12,27 +12,33 @@
         android:id="@+id/exTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="Back Squat Placeholder"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        tools:text="rahul" />
-
-    <ImageView
-        android:id="@+id/ivImage"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:scaleType="centerCrop"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:text="Back Squat Placeholder" />
 
     <TextView
         android:id="@+id/exDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        tools:text="trying to look hipster" />
+        android:text="place barbell on shoulders and.." />
 
     <TextView
-        android:id="@+id/relTime"
-        android:layout_width="81dp"
-        android:layout_height="29dp"
-        android:text="hi" />
+        android:id="@+id/exEquipment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Barbell"
+        tools:text="Barbell" />
+
+    <TextView
+        android:id="@+id/musclePrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/muscleSecondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 </LinearLayout>

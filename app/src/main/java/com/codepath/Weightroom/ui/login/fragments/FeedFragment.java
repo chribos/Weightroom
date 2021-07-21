@@ -43,6 +43,7 @@ import okhttp3.Headers;
 public class FeedFragment extends Fragment {
     protected List<Exercise> allExercises;
     public RecyclerView rvExercises;
+    //create instance variable for language [readability]
     public static final String EXERCISE_INFO_URL = "https://wger.de/api/v2/exerciseinfo/?format=json&language=2";
 
     private String TAG = "FeedFragment";
@@ -105,7 +106,7 @@ public class FeedFragment extends Fragment {
         // Setup refresh listener which triggers new data loading
         rvExercises = view.findViewById(R.id.rvExercises);
 
-        // initialize the array that will hold posts and create a PostsAdapter
+        // initialize the array that will hold exercices and create a PostsAdapter
         allExercises = new ArrayList<>();
         ExercisesAdapter = new ExercisesAdapter(getContext(), allExercises);
 
@@ -141,34 +142,34 @@ public class FeedFragment extends Fragment {
 //        queryPosts();
     }
 
-    protected void queryPosts() {
-        // specify what type of data we want to query - Post.class
-        ParseQuery<Exercise> query = ParseQuery.getQuery(Exercise.class);
-        // include data referred by user key
-        query.include(Exercise.KEY_USER);
-        // limit query to latest 20 items
-        query.setLimit(20);
-        // order posts by creation date (newest first)
-        query.addDescendingOrder("createdAt");
-        // start an asynchronous call for posts
-        query.findInBackground(new FindCallback<Exercise>() {
-            @Override
-            public void done(List<Exercise> exercises, ParseException e) {
-                // check for errors
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting posts", e);
-                    return;
-                }
-
-                // for debugging purposes let's print every post description to logcat
-                for (Exercise exercise : exercises) {
-                    Log.i(TAG, "Post: " + exercise.getDescription() + ", username: " + exercise.getUser().getUsername());
-                }
-
-                // save received posts to list and notify adapter of new data
-                allExercises.addAll(exercises);
-                ExercisesAdapter.notifyDataSetChanged();
-            }
-        });
-    }
+//    protected void queryPosts() {
+//        // specify what type of data we want to query - Post.class
+//        ParseQuery<Exercise> query = ParseQuery.getQuery(Exercise.class);
+//        // include data referred by user key
+//        query.include(Exercise.KEY_USER);
+//        // limit query to latest 20 items
+//        query.setLimit(20);
+//        // order posts by creation date (newest first)
+//        query.addDescendingOrder("createdAt");
+//        // start an asynchronous call for posts
+//        query.findInBackground(new FindCallback<Exercise>() {
+//            @Override
+//            public void done(List<Exercise> exercises, ParseException e) {
+//                // check for errors
+//                if (e != null) {
+//                    Log.e(TAG, "Issue with getting posts", e);
+//                    return;
+//                }
+//
+//                // for debugging purposes let's print every post description to logcat
+//                for (Exercise exercise : exercises) {
+//                    Log.i(TAG, "Post: " + exercise.getDescription() + ", username: " + exercise.getUser().getUsername());
+//                }
+//
+//                // save received posts to list and notify adapter of new data
+//                allExercises.addAll(exercises);
+//                ExercisesAdapter.notifyDataSetChanged();
+//            }
+//        });
+//    }
 }

@@ -17,7 +17,7 @@
         tools:text="Deadlift" />
 
     <TextView
-        android:id="@+id/exDescription"
+        android:id="@+id/exEquipment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

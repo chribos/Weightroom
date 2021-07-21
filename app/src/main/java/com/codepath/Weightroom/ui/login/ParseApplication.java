@@ -12,7 +12,7 @@ public class ParseApplication extends Application {
         super.onCreate();
 
         //register past module "Post" that we just created
-        ParseObject.registerSubclass(Exercise.class);
+//        ParseObject.registerSubclass(Exercise.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("U7O0jWNcE4YAnoYo2K8mHDbiwFAoFngGDzUeuxFE")

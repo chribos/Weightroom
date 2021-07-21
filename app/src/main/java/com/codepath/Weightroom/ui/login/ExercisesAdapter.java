@@ -2,6 +2,7 @@ package com.codepath.Weightroom.ui.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,31 +64,37 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
 //        previously name of the user, now title of the exercise, exTitle
 //        private TextView exName;
         private TextView exTitle;
-        private TextView exDescription;
+        private TextView exEquipment;
         private LinearLayout tvMedia;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             exTitle = itemView.findViewById(R.id.exTitle);
-            exDescription = itemView.findViewById(R.id.exDescription);
+            exEquipment = itemView.findViewById(R.id.exEquipment);
             tvMedia = itemView.findViewById(R.id.tvMedia);
 
         }
 
         public void bind(Exercise exercise) {
-            Date createdAt = exercise.getCreatedAt();
-            String timeAgo = Exercise.calculateTimeAgo(createdAt);
+//            Date createdAt = exercise.getCreatedAt();
+//            String timeAgo = Exercise.calculateTimeAgo(createdAt);
             // Bind the post data to the view elements
-            exDescription.setText(exercise.getDescription());
+            exEquipment.setText(exercise.getExEquipment());
             exTitle.setText(exercise.getExTitle());
-            ParseFile image = exercise.getImage();
-            tvMedia.setOnClickListener(new View.OnClickListener() {
+//            ParseFile image = exercise.getImage();
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(context, DetailsActivity.class);
-                    i.putExtra("post", Parcels.wrap(exercise));
-                    context.startActivity(i);
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION) {
+
+                        Intent i = new Intent(context, DetailsActivity.class);
+                        Log.i("ExerciseAdapter", exercise.getExDescription());
+                        i.putExtra("e", Parcels.wrap(exercise));
+                        context.startActivity(i);
+
+                    }
                 }
             });
         }
