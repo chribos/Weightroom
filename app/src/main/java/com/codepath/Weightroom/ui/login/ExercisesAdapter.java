@@ -66,6 +66,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
         private TextView exTitle;
         private TextView exEquipment;
         private LinearLayout tvMedia;
+        private TextView exCategory;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -73,6 +74,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
             exTitle = itemView.findViewById(R.id.exTitle);
             exEquipment = itemView.findViewById(R.id.exEquipment);
             tvMedia = itemView.findViewById(R.id.tvMedia);
+            exCategory = itemView.findViewById(R.id.exCategory);
 
         }
 
@@ -80,8 +82,9 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
 //            Date createdAt = exercise.getCreatedAt();
 //            String timeAgo = Exercise.calculateTimeAgo(createdAt);
             // Bind the post data to the view elements
-            exEquipment.setText(exercise.getExEquipment());
             exTitle.setText(exercise.getExTitle());
+            exEquipment.setText("Equipment: "+exercise.getExEquipment());
+            exCategory.setText("Category: "+ exercise.getExCategory());
 //            ParseFile image = exercise.getImage();
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

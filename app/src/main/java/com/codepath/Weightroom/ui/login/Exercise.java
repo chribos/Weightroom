@@ -26,12 +26,14 @@ public class Exercise {
 //    public static final String KEY_USER = "user";
     String exTitle;
     String exDescription;
+    String exCategory;
     ArrayList<String> equip;
 
     public Exercise() {}
     public Exercise(JSONObject exercise) throws JSONException {
         exTitle = exercise.getString("name");
         exDescription = exercise.getString("description");
+        exCategory = exercise.getJSONObject("category").getString("name");
         equip = new ArrayList<String>();
         JSONArray equipArray = exercise.getJSONArray("equipment");
         if (equipArray.length()> 0 && (exercise.getJSONArray("equipment").getJSONObject(0).getInt("id")) != 7) {
@@ -80,13 +82,13 @@ public class Exercise {
 //        return getString(KEY_DESCRIPTION);
 //    }
 
-//    public String getExDescription() {
-//        return exDescription;
-//    }
-
 
     public String getExDescription() {
         return exDescription;
+    }
+
+    public String getExCategory() {
+        return exCategory;
     }
 
 

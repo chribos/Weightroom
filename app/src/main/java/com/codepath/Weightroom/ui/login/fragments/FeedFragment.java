@@ -43,8 +43,12 @@ import okhttp3.Headers;
 public class FeedFragment extends Fragment {
     protected List<Exercise> allExercises;
     public RecyclerView rvExercises;
+
+    //2 is the id for the english language, 1 for german
+    public static final String LANGUAGE_KEY =  String.valueOf(2) ;
     //create instance variable for language [readability]
-    public static final String EXERCISE_INFO_URL = "https://wger.de/api/v2/exerciseinfo/?format=json&language=2";
+    public static final String EXERCISE_INFO_URL =
+            "https://wger.de/api/v2/exerciseinfo/?format=json&language="+LANGUAGE_KEY;
 
     private String TAG = "FeedFragment";
     protected ExercisesAdapter ExercisesAdapter;

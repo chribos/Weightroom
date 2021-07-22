@@ -32,6 +32,9 @@
         <activity android:name="com.codepath.Weightroom.ui.login.MainActivity"/>
         <activity android:name="com.codepath.Weightroom.ui.login.DetailsActivity"/>
         <activity android:name="com.codepath.Weightroom.ui.login.RegisterActivity"/>
+        <activity android:name="com.codepath.Weightroom.ui.login.PromptActivity"/>
+
+
 
         <activity
             android:name="com.codepath.Weightroom.ui.login.SplashActivity"
