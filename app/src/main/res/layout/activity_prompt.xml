@@ -32,7 +32,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
-        android:text="Dumbell"
+        android:text="Dumbbell"
         android:textSize="18dp" />
 
     <CheckBox
@@ -134,7 +134,7 @@
         tools:srcCompat="@drawable/barbell" />
 
     <ImageView
-        android:id="@+id/imgDumbell"
+        android:id="@+id/imgDumbbell"
         android:layout_width="59dp"
         android:layout_height="54dp"
         android:layout_alignParentTop="true"
