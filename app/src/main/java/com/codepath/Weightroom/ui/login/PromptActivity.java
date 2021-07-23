@@ -26,6 +26,8 @@ public class PromptActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prompt);
 
+        getSupportActionBar().hide();
+
         btnAdd = findViewById(R.id.btnAdd);
         cb1 = findViewById(R.id.cb1);
         cb2 = findViewById(R.id.cb2);
