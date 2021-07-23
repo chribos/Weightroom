@@ -43,7 +43,7 @@ public class DetailsActivity extends AppCompatActivity {
         exTitle.setText(exercise.getExTitle());
         Log.i(TAG, "problem" + exercise.getExTitle());
         exDescription.setText(exercise.getExDescription());
-        exEquipment.setText(exercise.getExEquipment());
+        exEquipment.setText("Equipment: "+ exercise.getExEquipment());
 
 //        exEquipment.setText(exercise.getExEquipment());
 //        relTime.setText(exercise.calculateTimeAgo(exercise.getCreatedAt()));

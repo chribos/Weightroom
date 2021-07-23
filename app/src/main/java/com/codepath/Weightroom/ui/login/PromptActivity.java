@@ -1,33 +1,25 @@
 package com.codepath.Weightroom.ui.login;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.codepath.Weightroom.R;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.io.FileUtils;
 
 
 public class PromptActivity extends AppCompatActivity {
     List<String> equipmentList;
 
-    Button btnAdd;
-    EditText etItem;
-    RecyclerView rvItems;
-    EquipmentAdapter EquipmentAdapter;
+    Button btnAdd,  selectAll, deselectAll;
+    CheckBox cb1, cb2, cb3, cb4, cb5;
+    ImageView selectImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,80 +27,64 @@ public class PromptActivity extends AppCompatActivity {
         setContentView(R.layout.activity_prompt);
 
         btnAdd = findViewById(R.id.btnAdd);
-        etItem = findViewById(R.id.etItem);
-        rvItems = findViewById(R.id.rvItems);
+        cb1 = findViewById(R.id.cb1);
+        cb2 = findViewById(R.id.cb2);
+        cb3 = findViewById(R.id.cb3);
+        cb4 = findViewById(R.id.cb4);
+        cb5 = findViewById(R.id.cb5);
 
-        loadItems();
-        /*add arbitrary hardcoded items to test the model display
-        items = new ArrayList<>();
-        items.add("Buy goat cheese");
-        items.add("Go skiing");
-        items.add("lift");*/
+        selectImg = findViewById(R.id.selectImg);
 
-        //ctrl+o to see override methods (selected onitemlongclicked in this case)
-        EquipmentAdapter.OnLongClickListener onLongClickListener =  new EquipmentAdapter.OnLongClickListener() {
 
-            @Override
-            public void onItemLongClicked(int position) {
-                //delete item from model
-                equipmentList.remove(position);
-                //make itemsAdapter field (under rv at the top to notify the adapter of an item removed)
-                EquipmentAdapter.notifyItemRemoved(position);
-                //create 'toast' notifying user that their item has been removed
-                Toast.makeText(getApplicationContext(), "Item removed", Toast.LENGTH_SHORT).show();
-                saveItems();
+        selectAll= findViewById(R.id.selectAll);
+        selectAll.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+               if (!cb1.isChecked()) {cb1.setChecked(true);}
+                if (!cb2.isChecked()) {cb2.setChecked(true);}
+                if (!cb3.isChecked()) {cb3.setChecked(true);}
+                if (!cb4.isChecked()) {cb4.setChecked(true);}
+                if (!cb5.isChecked()) {cb5.setChecked(true);}
             }
-        };
+        });
+        deselectAll= findViewById(R.id.deselectAll);
+        deselectAll.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+                if (cb1.isChecked()) {cb1.setChecked(false);}
+                if (cb2.isChecked()) {cb2.setChecked(false);}
+                if (cb3.isChecked()) {cb3.setChecked(false);}
+                if (cb4.isChecked()) {cb4.setChecked(false);}
+                if (cb5.isChecked()) {cb5.setChecked(false);}
+            }
+        });
+
         //construct adapter here now and add second parameter for long click once finished
-        EquipmentAdapter = new EquipmentAdapter(equipmentList, onLongClickListener);
-        rvItems.setAdapter(EquipmentAdapter);
-        //displays items vertically on UI
-        rvItems.setLayoutManager(new LinearLayoutManager(this));
+
 
         //create on-click listener
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //get contents of user input text as soon as add is clicked
-                String equipItem = etItem.getText().toString();
+                String equipItem = selectAll.getText().toString();
                 //we have to also add item to model (string list of items which is placed on rv)
                 equipmentList.add(equipItem);
 
                 //we have to also notify the adapter that an item has been added to last position
-                EquipmentAdapter.notifyItemInserted(equipmentList.size()-1);
+//                EquipmentAdapter.notifyItemInserted(equipmentList.size()-1);
 
                 //now we clear edit text once inserted
-                etItem.setText("");
+
                 //create 'toast' notifying user that their item has been added
                 Toast.makeText(getApplicationContext(), "Equipment added", Toast.LENGTH_SHORT).show();
                 //save items to datafile
-                saveItems();
+
             }
         });
     }
-    //add commons library in build.gradle and this returns the file in which we store the items for persistence
-    private File getDataFile() {
-        return new File(getFilesDir(), "data.txt");
-    }
 
-    //this loads items by reading individual file lines
-    private void loadItems() {
-        try {
-            //read lines from data file and populate that into an arraylist
-            equipmentList = new ArrayList<>(FileUtils.readLines(getDataFile(), Charset.defaultCharset()));
-        } catch (IOException e) {
-            Log.e("PromptActivity", "Error reading items", e);
-            equipmentList = new ArrayList<>();
-        }
-    }
-    //writes items into data file
-    private void saveItems() {
-        try {
-            FileUtils.writeLines(getDataFile(), equipmentList);
-        } catch (IOException e) {
-            Log.e("PromptActivity", "Error writing equipment", e);
-        }
-
-    }
 
 }

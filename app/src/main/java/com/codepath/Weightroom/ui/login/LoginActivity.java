@@ -156,9 +156,14 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 //if it succeeded we navigate to the Main Activity
-                goFeedActivity();
+                goPromptActivity();
             }
         });
+    }
+    private void goPromptActivity(){
+        Intent i = new Intent(this, PromptActivity.class);
+        startActivity(i);
+        finish();
     }
     private void goFeedActivity(){
         Intent i = new Intent(this, MainActivity.class);
