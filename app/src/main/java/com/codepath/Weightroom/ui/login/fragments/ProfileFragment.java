@@ -1,5 +1,6 @@
 package com.codepath.Weightroom.ui.login.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,10 @@ import com.codepath.Weightroom.R;
 import com.codepath.Weightroom.ui.login.Equipment;
 import com.codepath.Weightroom.ui.login.Exercise;
 import com.codepath.Weightroom.ui.login.ExercisesAdapter;
+import com.codepath.Weightroom.ui.login.LoginActivity;
+import com.codepath.Weightroom.ui.login.MainActivity;
+import com.codepath.Weightroom.ui.login.PermaPromptActivity;
+import com.codepath.Weightroom.ui.login.PromptActivity;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.parse.FindCallback;
@@ -84,6 +89,7 @@ public class ProfileFragment extends Fragment {
     protected Button exLogout;
     protected CircleImageView ivProfile;
     protected  TextView eqList;
+    protected Button exEdit;
     //2 is the id for the english language, 1 for german
     public static final String LANGUAGE_KEY = String.valueOf(2);
     //create instance variable for language [readability]
@@ -151,6 +157,7 @@ public class ProfileFragment extends Fragment {
         exUsername = view.findViewById(R.id.exUsername);
         exLogout = view.findViewById(R.id.exLogout);
         eqList = view.findViewById(R.id.eqList);
+        exEdit = view.findViewById(R.id.exEdit);
 
         String currentUsername = ParseUser.getCurrentUser().getUsername();
         exUsername.setText(currentUsername);
@@ -175,6 +182,30 @@ public class ProfileFragment extends Fragment {
 
 
 
+        exLogout.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick(View v) {
+                //log user out
+                ParseUser.logOut();
+                ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        exEdit.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), PermaPromptActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 }
 

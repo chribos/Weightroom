@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/etItem2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login.PromptActivity">
+
+    <ImageView
+        android:id="@+id/selectImg"
+        android:layout_width="380dp"
+        android:layout_height="197dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="70dp"
+        android:visibility="visible"
+        app:srcCompat="@drawable/select_equip"
+        tools:srcCompat="@drawable/select_equip"
+        tools:visibility="visible" />
+
+    <CheckBox
+        android:id="@+id/cb1"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:layout_below="@+id/cb4"
+        android:layout_alignStart="@+id/cb4"
+        android:layout_alignEnd="@+id/cb4"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:text="Dumbbell"
+        android:textSize="18dp" />
+
+    <CheckBox
+        android:id="@+id/cb2"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:layout_below="@+id/cb3"
+        android:layout_alignStart="@+id/cb3"
+        android:layout_alignEnd="@+id/cb3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="0dp"
+        android:text="Bench"
+        android:textSize="18dp" />
+
+    <CheckBox
+        android:id="@+id/cb3"
+        android:layout_width="130dp"
+        android:layout_height="43dp"
+        android:layout_column="2"
+        android:layout_below="@+id/cb5"
+        android:layout_alignStart="@+id/cb5"
+        android:layout_alignEnd="@+id/cb5"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="-17dp"
+        android:text="Bodyweight"
+        android:textSize="18dp" />
+
+    <CheckBox
+        android:id="@+id/cb4"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="261dp"
+        android:text="Barbell"
+        android:textSize="18dp" />
+
+    <CheckBox
+        android:id="@+id/cb5"
+        android:layout_width="119dp"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:layout_below="@+id/cb1"
+        android:layout_alignStart="@+id/cb1"
+        android:layout_alignEnd="@+id/cb1"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="0dp"
+        android:text="Kettlebell"
+        android:textSize="18dp" />
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="234dp"
+        android:layout_marginBottom="130dp"
+        android:text="submit" />
+
+    <Button
+        android:id="@+id/selectAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="@android:string/selectAll" />
+
+    <Button
+        android:id="@+id/deselectAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="287dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:text="Reset" />
+
+    <ImageView
+        android:id="@+id/imgBarbell"
+        android:layout_width="59dp"
+        android:layout_height="54dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="254dp"
+        android:layout_marginEnd="133dp"
+        app:srcCompat="@drawable/barbell"
+        tools:srcCompat="@drawable/barbell" />
+
+    <ImageView
+        android:id="@+id/imgDumbbell"
+        android:layout_width="59dp"
+        android:layout_height="54dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="309dp"
+        android:layout_marginEnd="133dp"
+        app:srcCompat="@drawable/dumbell"
+        tools:srcCompat="@drawable/dumbell" />
+
+    <ImageView
+        android:id="@+id/imgKettlebell"
+        android:layout_width="59dp"
+        android:layout_height="54dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="361dp"
+        android:layout_marginEnd="133dp"
+        app:srcCompat="@drawable/kettlebell"
+        tools:srcCompat="@drawable/kettlebell" />
+
+    <ImageView
+        android:id="@+id/imgBodyweight"
+        android:layout_width="59dp"
+        android:layout_height="54dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="416dp"
+        android:layout_marginEnd="133dp"
+        app:srcCompat="@drawable/bodyweight"
+        tools:srcCompat="@drawable/bodyweight" />
+
+    <ImageView
+        android:id="@+id/imgBench"
+        android:layout_width="59dp"
+        android:layout_height="54dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="470dp"
+        android:layout_marginEnd="133dp"
+        app:srcCompat="@drawable/bench"
+        tools:srcCompat="@drawable/bench" />
+
+
+</RelativeLayout>

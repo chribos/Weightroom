@@ -32,7 +32,14 @@
         <activity android:name="com.codepath.Weightroom.ui.login.MainActivity"/>
         <activity android:name="com.codepath.Weightroom.ui.login.DetailsActivity"/>
         <activity android:name="com.codepath.Weightroom.ui.login.RegisterActivity"/>
-        <activity android:name="com.codepath.Weightroom.ui.login.PromptActivity"/>
+        <activity android:name="com.codepath.Weightroom.ui.login.PermaPromptActivity"/>
+        <activity android:name="com.codepath.Weightroom.ui.login.PromptActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
 
 
 

@@ -15,17 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.codepath.Weightroom.R;
 import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
-
-public class PromptActivity extends AppCompatActivity {
+//this class is one that makes sure the prompt is displayed regardless if the user has seen it before
+public class PermaPromptActivity extends AppCompatActivity {
     ArrayList<String> equipmentList;
 
     public final String TAG = "promptActivity";
@@ -34,25 +30,11 @@ public class PromptActivity extends AppCompatActivity {
     CheckBox cb1, cb2, cb3, cb4, cb5;
     ImageView selectImg;
 
-    String prevStarted = "yes";
-    @Override
-    protected void onResume() {
-        super.onResume();
-        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
-        if (!sharedpreferences.getBoolean(prevStarted, false)) {
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putBoolean(prevStarted, Boolean.TRUE);
-            editor.apply();
-        } else {
-            Intent intent = new Intent(this,MainActivity.class);
-            startActivity(intent);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_prompt);
+        setContentView(R.layout.perma_prompt);
 
         getSupportActionBar().hide();
 
@@ -72,7 +54,7 @@ public class PromptActivity extends AppCompatActivity {
 
             public void onClick(View v) {
 
-               if (!cb1.isChecked()) {cb1.setChecked(true);}
+                if (!cb1.isChecked()) {cb1.setChecked(true);}
                 if (!cb2.isChecked()) {cb2.setChecked(true);}
                 if (!cb3.isChecked()) {cb3.setChecked(true);}
                 if (!cb4.isChecked()) {cb4.setChecked(true);}
