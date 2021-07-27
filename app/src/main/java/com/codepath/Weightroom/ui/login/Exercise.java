@@ -22,7 +22,7 @@ import java.util.List;
 public class Exercise {
 
 //    public static final String KEY_DESCRIPTION = "description";
-//    public static final String KEY_IMAGE = "image";
+//    public static final String KEY_IMAGE = "w";
 //    public static final String KEY_USER = "user";
     String exTitle;
     String exDescription;

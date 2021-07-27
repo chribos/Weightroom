@@ -70,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),
                                         "Account created!", Toast.LENGTH_SHORT).show();
                                 Log.i("Register", "account success");
-                                goLoginActivity();
+                                goPromptActivity();
                             } else {
                                 // Sign up didn't succeed. Look at the ParseException
                                 // to figure out what went wrong
@@ -91,5 +91,10 @@ public class RegisterActivity extends AppCompatActivity {
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
         }
+    private void goPromptActivity(){
+        Intent i = new Intent(this, PromptActivity.class);
+        startActivity(i);
+        finish();
+    }
     }
 

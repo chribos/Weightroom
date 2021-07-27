@@ -1,6 +1,8 @@
 package com.codepath.Weightroom.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -10,12 +12,21 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.codepath.Weightroom.R;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class PromptActivity extends AppCompatActivity {
-    List<String> equipmentList;
+    ArrayList<String> equipmentList;
+
+    public final String TAG = "promptActivity";
 
     Button btnAdd,  selectAll, deselectAll;
     CheckBox cb1, cb2, cb3, cb4, cb5;
@@ -37,6 +48,7 @@ public class PromptActivity extends AppCompatActivity {
 
         selectImg = findViewById(R.id.selectImg);
 
+        equipmentList = new ArrayList<String>();
 
         selectAll= findViewById(R.id.selectAll);
         selectAll.setOnClickListener(new View.OnClickListener() {
@@ -70,23 +82,52 @@ public class PromptActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //get contents of user input text as soon as add is clicked
-                String equipItem = selectAll.getText().toString();
-                //we have to also add item to model (string list of items which is placed on rv)
-                equipmentList.add(equipItem);
+                if (cb1.isChecked()) {equipmentList.add(cb1.getText().toString());}
+                if (cb2.isChecked()) {equipmentList.add(cb2.getText().toString());}
+                if (cb3.isChecked()) {equipmentList.add(cb3.getText().toString());}
+                if (cb4.isChecked()) {equipmentList.add(cb4.getText().toString());}
+                if (cb5.isChecked()) {equipmentList.add(cb5.getText().toString());}
 
-                //we have to also notify the adapter that an item has been added to last position
-//                EquipmentAdapter.notifyItemInserted(equipmentList.size()-1);
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                savePost(equipmentList, currentUser);
 
-                //now we clear edit text once inserted
+                //go to main activity
+                //TODO: Add filters on FeedFragment, only include equipment that they have
+
+                Intent i = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(i);
+                finish();
+                //TODO: Add profile fragment where they can view equipment and edit list
 
                 //create 'toast' notifying user that their item has been added
-                Toast.makeText(getApplicationContext(), "Equipment added", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, equipmentList.toString());
                 //save items to datafile
 
             }
         });
     }
+    private void savePost(ArrayList equipmentList, ParseUser currentUser) {
+        Equipment post = new Equipment();
+        post.setEquipment(equipmentList);
+        post.setUser(currentUser);
+        //saves post to database
+        post.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e!= null) {
+                    Log.e(TAG, "issue with saving posts", e);
+                    Toast.makeText(getBaseContext(), "Error saving post", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Log.i(TAG, "post saved!", e);
+                Toast.makeText(getBaseContext(), "Post saved!", Toast.LENGTH_SHORT).show();
+                //empty image
 
+
+
+            }
+        });
+
+    }
 
 }
