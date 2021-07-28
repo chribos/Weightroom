@@ -13,7 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.codepath.Weightroom.R;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
@@ -68,12 +72,14 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
         private TextView exCategory;
 
 
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             exTitle = itemView.findViewById(R.id.exTitle);
             exEquipment = itemView.findViewById(R.id.exEquipment);
             tvMedia = itemView.findViewById(R.id.tvMedia);
             exCategory = itemView.findViewById(R.id.exCategory);
+
 
         }
 
@@ -82,6 +88,36 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
             exTitle.setText(exercise.getExTitle());
             exEquipment.setText("Equipment: "+exercise.getExEquipment());
             exCategory.setText("Category: "+ exercise.getExCategory());
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Log.i("Adapter", "item has been long-clicked");
+                    //make query and make sure there are no duplicates and show toast
+                   Workout workoutClass = new Workout();
+                    workoutClass.setUser(ParseUser.getCurrentUser());
+                    workoutClass.put("exTitle", exercise.getExTitle());
+                    workoutClass.put("exDescription", exercise.getExDescription());
+                    workoutClass.put("exCategory", exercise.getExCategory());
+                    workoutClass.put("exEquipment", exercise.getExEquipment());
+//                    gameScore.put("pla", "Sean Plott");
+//                    gameScore.put("cheatMode", false);
+                    workoutClass.put("user", ParseUser.getCurrentUser());
+
+                    workoutClass.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if(e != null) {
+                                Log.e("LongClick", "error:" +e);
+                            } else{
+                                Log.i("LongClick", "Exercise saved!");
+                            }
+                        }
+                    });
+
+                    return false;
+                }
+            });
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

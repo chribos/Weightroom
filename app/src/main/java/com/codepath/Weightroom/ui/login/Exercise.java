@@ -24,6 +24,7 @@ public class Exercise {
     String exTitle;
     String exDescription;
     String exCategory;
+//    Integer exId;
     ArrayList<String> equip;
 
     public Exercise() {}
@@ -31,6 +32,7 @@ public class Exercise {
         exTitle = exercise.getString("name");
         exDescription = exercise.getString("description");
         exCategory = exercise.getJSONObject("category").getString("name");
+//        exId = exercise.getInt("id");
 
         equip = new ArrayList<String>();
         JSONArray equipArray = exercise.getJSONArray("equipment");
@@ -77,7 +79,9 @@ public class Exercise {
         return exTitle;
     }
 
-
+//    public Integer getExId() {
+//        return exId;
+//    }
 
     public String getExDescription() {
         //removes tags like <p> </p> and adds a new line for the start of each sentence for polish

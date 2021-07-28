@@ -1,5 +1,6 @@
 package com.codepath.Weightroom.ui.login.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.codepath.Weightroom.R;
@@ -20,6 +22,7 @@ import com.codepath.Weightroom.ui.login.Equipment;
 import com.codepath.Weightroom.ui.login.Exercise;
 import com.codepath.Weightroom.ui.login.ExercisesAdapter;
 
+import com.codepath.Weightroom.ui.login.LoginActivity;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.parse.FindCallback;
@@ -46,6 +49,7 @@ public class FeedFragment extends Fragment {
     protected List<Exercise> allExercises;
     public RecyclerView rvExercises;
     public List userEquipment;
+    public Button exLogout;
 
     //2 is the id for the english language, 1 for german
     public static final String LANGUAGE_KEY =  String.valueOf(2) ;
@@ -108,12 +112,13 @@ public class FeedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         homeIcon = view.findViewById(R.id.homeIcon);
         rvExercises = view.findViewById(R.id.rvExercises);
+        exLogout = view.findViewById(R.id.exLogout);
 
         // initialize the array that will hold exercises and create a PostsAdapter
         allExercises = new ArrayList<>();
         ExercisesAdapter = new ExercisesAdapter(getContext(), allExercises);
 
-        //query for exercise list
+        //query for equipment list
         ParseQuery<Equipment> query = ParseQuery.getQuery(Equipment.class);
         query.include(Equipment.KEY_USER);
         query.whereEqualTo(Equipment.KEY_USER, ParseUser.getCurrentUser());
@@ -135,6 +140,26 @@ public class FeedFragment extends Fragment {
         // set the adapter on the recycler view of exercises that contain user's equipment
         rvExercises.setAdapter(ExercisesAdapter);
 
+        exLogout.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick(View v) {
+                //log user out
+                ParseUser.logOut();
+                ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        asyncCall();
+        // set the layout manager on the recycler view
+        rvExercises.setLayoutManager(new LinearLayoutManager(getContext()));
+
+    }
+    protected void asyncCall() {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(EXERCISE_INFO_URL, new JsonHttpResponseHandler() {
             @Override
@@ -169,8 +194,6 @@ public class FeedFragment extends Fragment {
                 Log.d(TAG, "onFailure");
             }
         });
-        // set the layout manager on the recycler view
-        rvExercises.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }
 }

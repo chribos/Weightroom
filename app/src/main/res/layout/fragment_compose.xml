@@ -1,63 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.login.fragments.ComposeFragment">
 
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:text="logout " />
-
-    <EditText
-        android:id="@+id/etDescription"
-        android:layout_width="287dp"
-        android:layout_height="61dp"
-        android:layout_below="@+id/btnCapture"
-        android:layout_alignParentStart="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Description"
-        android:inputType="textPersonName" />
-
-    <Button
-        android:id="@+id/btnCapture"
-        android:layout_width="286dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="52dp"
-        android:text="Take Picture" />
-
-    <Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="289dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etDescription"
-        android:layout_alignParentStart="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="24dp"
-        android:text="Submit" />
-
     <ImageView
-        android:id="@+id/ivPostImg"
-        android:layout_width="214dp"
-        android:layout_height="297dp"
-        android:layout_above="@+id/btnCapture"
+        android:id="@+id/homeIcon"
+        android:layout_width="266dp"
+        android:layout_height="64dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="76dp"
+        app:srcCompat="@drawable/weightroomlogo"
+        tools:src="@drawable/weightroomlogo" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
+        android:layout_width="407dp"
+        android:layout_height="652dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="-1dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/exCurrent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:padding="8dp" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <Button
+        android:id="@+id/exLogout"
+        android:layout_width="74dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp"
-        android:layout_marginEnd="103dp"
-        android:layout_marginBottom="4dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:text="logout "
+        android:textSize="8sp" />
 
 </RelativeLayout>

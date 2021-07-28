@@ -22,25 +22,40 @@ public class DetailsActivity extends AppCompatActivity {
     TextView exDescription;
     TextView exEquipment;
     LinearLayout tvMedia;
+    Workout workout;
     public static final String TAG = "DetailsActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
+        workout = Parcels.unwrap(getIntent().getParcelableExtra("w"));
         exercise = Parcels.unwrap(getIntent().getParcelableExtra("e"));
-        Log.d(TAG, String.format ("Showing details for %s", exercise.getExDescription()));
+        if (exercise != null) {
+            Log.d(TAG, String.format("Showing details for %s", exercise.getExDescription()));
 
-        tvMedia = findViewById(R.id.tvMedia);
-        exTitle= findViewById(R.id.exTitle);
-        exDescription = findViewById(R.id.exDescription);
-        exEquipment = findViewById(R.id.exEquipment);
+            tvMedia = findViewById(R.id.tvMedia);
+            exTitle = findViewById(R.id.exTitle);
+            exDescription = findViewById(R.id.exDescription);
+            exEquipment = findViewById(R.id.exEquipment);
 
-        exTitle.setText(exercise.getExTitle());
-        Log.i(TAG, "problem" + exercise.getExTitle());
-        exDescription.setText(exercise.getExDescription());
-        exEquipment.setText("Equipment: "+ exercise.getExEquipment());
+            exTitle.setText(exercise.getExTitle());
+            Log.i(TAG, "problem" + exercise.getExTitle());
+            exDescription.setText(exercise.getExDescription());
+            exEquipment.setText("Equipment: " + exercise.getExEquipment());
+        } else {
+            Log.d(TAG, String.format("Showing details for %s", workout.getDescription()));
 
+            tvMedia = findViewById(R.id.tvMedia);
+            exTitle = findViewById(R.id.exTitle);
+            exDescription = findViewById(R.id.exDescription);
+            exEquipment = findViewById(R.id.exEquipment);
+
+            exTitle.setText(workout.getTitle());
+            Log.i(TAG, "problem" + workout.getTitle());
+            exDescription.setText(workout.getDescription());
+            exEquipment.setText("Equipment: " + workout.getEquipment());
+        }
         getSupportActionBar().hide();
 
 //        exEquipment.setText(exercise.getExEquipment());
