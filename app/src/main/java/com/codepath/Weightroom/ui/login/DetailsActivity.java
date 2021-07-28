@@ -26,24 +26,22 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //set content view only needs to be called once at the top
         setContentView(R.layout.activity_details);
 
         exercise = Parcels.unwrap(getIntent().getParcelableExtra("e"));
         Log.d(TAG, String.format ("Showing details for %s", exercise.getExDescription()));
 
         tvMedia = findViewById(R.id.tvMedia);
-//        ivImage = findViewById(R.id.ivImage);
         exTitle= findViewById(R.id.exTitle);
         exDescription = findViewById(R.id.exDescription);
         exEquipment = findViewById(R.id.exEquipment);
 
-//        exDescription.setText(exercise.getExDescription());
-//        Log.i(TAG, "problem" + exercise.getExDescription());
         exTitle.setText(exercise.getExTitle());
         Log.i(TAG, "problem" + exercise.getExTitle());
         exDescription.setText(exercise.getExDescription());
         exEquipment.setText("Equipment: "+ exercise.getExEquipment());
+
+        getSupportActionBar().hide();
 
 //        exEquipment.setText(exercise.getExEquipment());
 //        relTime.setText(exercise.calculateTimeAgo(exercise.getCreatedAt()));

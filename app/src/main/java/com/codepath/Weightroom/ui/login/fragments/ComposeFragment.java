@@ -54,8 +54,7 @@ public class ComposeFragment extends Fragment {
     private File photoFile;
     public String photoFileName = "photo.jpg";
     public String TAG = "ComposeFragment";
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_nfkrgdfckburftbkhueuctluvufjvrgcNUMBER
+    // the fragment initialization parameters
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 

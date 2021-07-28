@@ -35,6 +35,7 @@ public class PromptActivity extends AppCompatActivity {
     ImageView selectImg;
 
     String prevStarted = "yes";
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -92,10 +93,6 @@ public class PromptActivity extends AppCompatActivity {
             }
         });
 
-        //construct adapter here now and add second parameter for long click once finished
-
-
-        //create on-click listener
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,17 +105,11 @@ public class PromptActivity extends AppCompatActivity {
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 savePost(equipmentList, currentUser);
 
-                //go to main activity
-                //TODO: Add filters on FeedFragment, only include equipment that they have
-
                 Intent i = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(i);
                 finish();
-                //TODO: Add profile fragment where they can view equipment and edit list
 
-                //create 'toast' notifying user that their item has been added
                 Log.i(TAG, equipmentList.toString());
-                //save items to datafile
 
             }
         });
@@ -138,13 +129,7 @@ public class PromptActivity extends AppCompatActivity {
                 }
                 Log.i(TAG, "post saved!", e);
                 Toast.makeText(getBaseContext(), "Post saved!", Toast.LENGTH_SHORT).show();
-                //empty image
-
-
-
             }
         });
-
     }
-
 }

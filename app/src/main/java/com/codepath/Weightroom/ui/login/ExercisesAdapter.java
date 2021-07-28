@@ -61,8 +61,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-//        previously name of the user, now title of the exercise, exTitle
-//        private TextView exName;
+
         private TextView exTitle;
         private TextView exEquipment;
         private LinearLayout tvMedia;
@@ -79,13 +78,10 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
         }
 
         public void bind(Exercise exercise) {
-//            Date createdAt = exercise.getCreatedAt();
-//            String timeAgo = Exercise.calculateTimeAgo(createdAt);
             // Bind the post data to the view elements
             exTitle.setText(exercise.getExTitle());
             exEquipment.setText("Equipment: "+exercise.getExEquipment());
             exCategory.setText("Category: "+ exercise.getExCategory());
-//            ParseFile image = exercise.getImage();
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

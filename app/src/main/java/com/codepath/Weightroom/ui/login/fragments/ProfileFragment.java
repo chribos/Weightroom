@@ -48,63 +48,21 @@ public class ProfileFragment extends Fragment {
 
     public String TAG = "ProfileFragment";
 
-    /**
-     * since the only hting that differs is the query, we are going to want to modify it so we must
-     * make [query()] in FeedFragment protected instead of private so we can access it here.
-     */
-////    @Override
-//    protected void queryPosts() {
-//        // specify what type of data we want to query - Post.class
-//        ParseQuery<Exercise> query = ParseQuery.getQuery(Exercise.class);
-//        // include data referred by user key
-//        query.include(Exercise.KEY_USER);
-//        //filter by user profile instead of all posts!!!
-//        query.whereEqualTo(Exercise.KEY_USER, ParseUser.getCurrentUser());
-//        // limit query to latest 20 items
-//        query.setLimit(20);
-//        // order posts by creation date (newest first)
-//        query.addDescendingOrder("createdAt");
-//        // start an asynchronous call for posts
-//        query.findInBackground(new FindCallback<Exercise>() {
-//            @Override
-//            public void done(List<Exercise> exercises, ParseException e) {
-//                // check for errors
-//                if (e != null) {
-//                    Log.e(TAG, "Issue with getting posts", e);
-//                    return;
-//                }
-//
-//                // for debugging purposes let's print every post description to logcat
-//                for (Exercise exercise : exercises) {
-//                    Log.i(TAG, "Post: " + exercise.getDescription() + ", username: " + exercise.getUser().getUsername());
-//                }
-//
-//                // save received posts to list and notify adapter of new data
-//                allExercises.addAll(exercises);
-//                ExercisesAdapter.notifyDataSetChanged();
-//            }
-//        });
-//    }
+
     protected TextView exUsername;
     protected Button exLogout;
     protected CircleImageView ivProfile;
     protected  TextView eqList;
     protected Button exEdit;
-    //2 is the id for the english language, 1 for german
-    public static final String LANGUAGE_KEY = String.valueOf(2);
-    //create instance variable for language [readability]
-    public static final String EXERCISE_INFO_URL =
-            "https://wger.de/api/v2/exerciseinfo/?format=json&language=" + LANGUAGE_KEY;
+
 
     protected com.codepath.Weightroom.ui.login.ExercisesAdapter ExercisesAdapter;
     protected ImageView homeIcon;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // the fragment initialization parameters
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -120,7 +78,7 @@ public class ProfileFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment FeedFragment.
      */
-    // TODO: Rename and change types and number of parameters
+
     public static FeedFragment newInstance(String param1, String param2) {
         FeedFragment fragment = new FeedFragment();
         Bundle args = new Bundle();
@@ -149,20 +107,19 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //refresh
-        // Lookup the swipe container view
+
         homeIcon = view.findViewById(R.id.homeIcon);
-        // Setup refresh listener which triggers new data loading
         ivProfile = view.findViewById(R.id.ivProfile);
         exUsername = view.findViewById(R.id.exUsername);
         exLogout = view.findViewById(R.id.exLogout);
         eqList = view.findViewById(R.id.eqList);
         exEdit = view.findViewById(R.id.exEdit);
 
+
         String currentUsername = ParseUser.getCurrentUser().getUsername();
         exUsername.setText(currentUsername);
 
-
+        //queries for user's list of equipment specified from prompt
         ParseQuery<Equipment> query = ParseQuery.getQuery(Equipment.class);
         query.include(Equipment.KEY_USER);
         query.whereEqualTo(Equipment.KEY_USER, ParseUser.getCurrentUser());

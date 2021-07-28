@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.codepath.Weightroom.R;
+import com.codepath.Weightroom.ui.login.Equipment;
 import com.codepath.Weightroom.ui.login.Exercise;
 import com.codepath.Weightroom.ui.login.ExercisesAdapter;
 
@@ -24,6 +25,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -43,19 +45,19 @@ import okhttp3.Headers;
 public class FeedFragment extends Fragment {
     protected List<Exercise> allExercises;
     public RecyclerView rvExercises;
+    public List userEquipment;
 
     //2 is the id for the english language, 1 for german
     public static final String LANGUAGE_KEY =  String.valueOf(2) ;
     //create instance variable for language [readability]
     public static final String EXERCISE_INFO_URL =
-            "https://wger.de/api/v2/exerciseinfo/?format=json&language="+LANGUAGE_KEY;
+            "https://wger.de/api/v2/exerciseinfo/?format=json&language="+LANGUAGE_KEY +"&limit=40";
 
     private String TAG = "FeedFragment";
     protected ExercisesAdapter ExercisesAdapter;
     protected ImageView homeIcon;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // the fragment initialization parameters
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -104,19 +106,35 @@ public class FeedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //refresh
-        // Lookup the swipe container view
         homeIcon = view.findViewById(R.id.homeIcon);
-        // Setup refresh listener which triggers new data loading
         rvExercises = view.findViewById(R.id.rvExercises);
 
-        // initialize the array that will hold exercices and create a PostsAdapter
+        // initialize the array that will hold exercises and create a PostsAdapter
         allExercises = new ArrayList<>();
         ExercisesAdapter = new ExercisesAdapter(getContext(), allExercises);
 
+        //query for exercise list
+        ParseQuery<Equipment> query = ParseQuery.getQuery(Equipment.class);
+        query.include(Equipment.KEY_USER);
+        query.whereEqualTo(Equipment.KEY_USER, ParseUser.getCurrentUser());
+        query.addDescendingOrder("createdAt");
+        query.findInBackground(new FindCallback<Equipment>() {
+            @Override
+            public void done(List<Equipment> posts, ParseException e) {
+                if (e!= null) {
+                    Log.e(TAG, "issue with getting posts", e);
+                    return;
+                }
+                //retrieves current user's equipment list
+                userEquipment= posts.get(0).getEquipment();
+                Log.i(TAG, "equipment: " + posts.get(0).getEquipment().toString());
+            }
+        });
 
-        // set the adapter on the recycler view
+
+        // set the adapter on the recycler view of exercises that contain user's equipment
         rvExercises.setAdapter(ExercisesAdapter);
+
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(EXERCISE_INFO_URL, new JsonHttpResponseHandler() {
             @Override
@@ -126,7 +144,18 @@ public class FeedFragment extends Fragment {
                 try {
                     JSONArray results = jsonObject.getJSONArray("results");
                     Log.i(TAG, "Results" + results.toString());
-                    allExercises.addAll(Exercise.fromJsonArray(results));
+                    Log.i(TAG, "Results" + Exercise.fromJsonArray(results).get(0).getExEquipment());
+                    //only adds exercises that contain the user's equipment
+                    for(int k =0; k<Exercise.fromJsonArray(results).size(); k++) {
+                        for (int j = 0; j < userEquipment.size(); j++) {
+                            Log.i(TAG, "eq check" + userEquipment.get(j).toString());
+                            if (Exercise.fromJsonArray(results).get(k).getExEquipment().contains(userEquipment.get(j).toString())) {
+                                allExercises.add(Exercise.fromJsonArray(results).get(k));
+                                Log.i(TAG, "filtered exercises" + allExercises);
+                            }
+                        }
+                    }
+
                     ExercisesAdapter.notifyDataSetChanged();
                     Log.i(TAG, "Exercises" + allExercises.size());
                 } catch (JSONException e) {
@@ -142,38 +171,6 @@ public class FeedFragment extends Fragment {
         });
         // set the layout manager on the recycler view
         rvExercises.setLayoutManager(new LinearLayoutManager(getContext()));
-        // query posts from Parstagram
-//        queryPosts();
-    }
 
-//    protected void queryPosts() {
-//        // specify what type of data we want to query - Post.class
-//        ParseQuery<Exercise> query = ParseQuery.getQuery(Exercise.class);
-//        // include data referred by user key
-//        query.include(Exercise.KEY_USER);
-//        // limit query to latest 20 items
-//        query.setLimit(20);
-//        // order posts by creation date (newest first)
-//        query.addDescendingOrder("createdAt");
-//        // start an asynchronous call for posts
-//        query.findInBackground(new FindCallback<Exercise>() {
-//            @Override
-//            public void done(List<Exercise> exercises, ParseException e) {
-//                // check for errors
-//                if (e != null) {
-//                    Log.e(TAG, "Issue with getting posts", e);
-//                    return;
-//                }
-//
-//                // for debugging purposes let's print every post description to logcat
-//                for (Exercise exercise : exercises) {
-//                    Log.i(TAG, "Post: " + exercise.getDescription() + ", username: " + exercise.getUser().getUsername());
-//                }
-//
-//                // save received posts to list and notify adapter of new data
-//                allExercises.addAll(exercises);
-//                ExercisesAdapter.notifyDataSetChanged();
-//            }
-//        });
-//    }
+    }
 }

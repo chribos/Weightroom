@@ -70,10 +70,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),
                                         "Account created!", Toast.LENGTH_SHORT).show();
                                 Log.i("Register", "account success");
-                                goPromptActivity();
+                                goPermaPromptActivity();
                             } else {
                                 // Sign up didn't succeed. Look at the ParseException
-                                // to figure out what went wrong
                                 Log.e("Register", "account fail",e );
                                 Toast.makeText(getApplicationContext(),
                                         "Email and username must be unique", Toast.LENGTH_SHORT).show();
@@ -87,12 +86,8 @@ public class RegisterActivity extends AppCompatActivity {
         else {Toast.makeText(getApplicationContext(),
                 "Email, username, and/or password cannot be null", Toast.LENGTH_SHORT).show();}
     }
-        private void goLoginActivity () {
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-        }
-    private void goPromptActivity(){
-        Intent i = new Intent(this, PromptActivity.class);
+    private void goPermaPromptActivity(){
+        Intent i = new Intent(this, PermaPromptActivity.class);
         startActivity(i);
         finish();
     }
