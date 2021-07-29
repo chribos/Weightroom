@@ -31,6 +31,7 @@
 * [x] On login/registration they are prompted to input their equipment (not prompted everytime they login)
 * [x] Users can go to their profile and edit their equipment list
 * [x] Users are prompted ONLY once on login/registration to enter equipment
+* [ ] Current exercise list that incorporates long click gesture for both home feed and current list feed to add/remove exercises
 
 **Optional Nice-to-have Stories**
 
