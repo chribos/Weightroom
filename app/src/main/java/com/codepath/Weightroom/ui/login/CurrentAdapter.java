@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.codepath.Weightroom.R;
 import com.parse.ParseException;
@@ -82,35 +83,20 @@ public class CurrentAdapter extends RecyclerView.Adapter<CurrentAdapter.ViewHold
         }
 
         public void bind(Workout workout) {
-            // Bind the post data to the view elements
+            // Bind the workout data to the view elements
             exTitle.setText(workout.getTitle());
             exEquipment.setText("Equipment: "+workout.getEquipment());
             exCategory.setText("Category: "+ workout.getCategory());
-//            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    Log.i("Adapter", "item has been long-clicked");
-//                    ParseObject workoutClass = new ParseObject("Workout");
-//                    workoutClass.put("exTitle", exercise.getExTitle());
-//                    workoutClass.put("exDescription", exercise.getExDescription());
-//                    workoutClass.put("exCategory", exercise.getExCategory());
-//                    workoutClass.put("exEquipment", exercise.getExEquipment());
-//                    workoutClass.put("user", ParseUser.getCurrentUser());
-//
-//                    workoutClass.saveInBackground(new SaveCallback() {
-//                        @Override
-//                        public void done(ParseException e) {
-//                            if(e != null) {
-//                                Log.e("LongClick", "error:" +e);
-//                            } else{
-//                                Log.i("LongClick", "Exercise saved!");
-//                            }
-//                        }
-//                    });
-//
-//                    return false;
-//                }
-//            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Log.i("Adapter", "item has been long-clicked");
+                    workout.deleteInBackground();
+                    workout.saveInBackground();
+                    notifyDataSetChanged();
+                    return false;
+                }
+            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

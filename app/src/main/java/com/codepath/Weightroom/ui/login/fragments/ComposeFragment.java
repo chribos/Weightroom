@@ -12,6 +12,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -63,6 +64,8 @@ public class ComposeFragment extends Fragment {
     protected List<Workout> allWorkouts;
     public RecyclerView exCurrent;
     public Button exLogout;
+    private SwipeRefreshLayout swipeContainer;
+
 
     private String TAG = "ComposeFragment";
     protected CurrentAdapter CurrentAdapter;
@@ -120,6 +123,19 @@ public class ComposeFragment extends Fragment {
         homeIcon = view.findViewById(R.id.homeIcon);
         exCurrent = view.findViewById(R.id.exCurrent);
         exLogout = view.findViewById(R.id.exLogout);
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                CurrentAdapter.clear();
+                queryWorkouts();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+
 
         // initialize the array that will hold exercises and create a PostsAdapter
         allWorkouts = new ArrayList<>();

@@ -24,7 +24,8 @@ public class Exercise {
     String exTitle;
     String exDescription;
     String exCategory;
-//    Integer exId;
+    String exPrimary;
+    String exSecondary;
     ArrayList<String> equip;
 
     public Exercise() {}
@@ -32,7 +33,17 @@ public class Exercise {
         exTitle = exercise.getString("name");
         exDescription = exercise.getString("description");
         exCategory = exercise.getJSONObject("category").getString("name");
-//        exId = exercise.getInt("id");
+
+        //primary muscle call
+        if(exercise.getJSONArray("muscles").length()>0) {
+            exPrimary = "Primary muscle worked: " + exercise.getJSONArray("muscles").getJSONObject(0).getString("name") +"\n";
+        } else {exPrimary = "";}
+
+        //secondary muscle call
+        if(exercise.getJSONArray("muscles_secondary").length()>0) {
+            exSecondary = "Secondary muscle worked:" + exercise.getJSONArray("muscles_secondary").getJSONObject(0).getString("name");
+        } else {exSecondary = "";}
+
 
         equip = new ArrayList<String>();
         JSONArray equipArray = exercise.getJSONArray("equipment");
@@ -79,9 +90,13 @@ public class Exercise {
         return exTitle;
     }
 
-//    public Integer getExId() {
-//        return exId;
-//    }
+
+    public String getExPrimary() {
+        return exPrimary;
+    }
+    public String getExSecondary() {
+        return exSecondary;
+    }
 
     public String getExDescription() {
         //removes tags like <p> </p> and adds a new line for the start of each sentence for polish
