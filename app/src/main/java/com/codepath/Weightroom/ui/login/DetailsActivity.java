@@ -58,6 +58,8 @@ public class DetailsActivity extends AppCompatActivity {
             Log.i(TAG, "problem" + workout.getTitle());
             exDescription.setText(workout.getDescription());
             exEquipment.setText("Equipment: " + workout.getEquipment());
+            exPrimary.setText(workout.getPrimary());
+            exSecondary.setText(workout.getSecondary());
         }
         getSupportActionBar().hide();
 

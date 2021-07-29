@@ -19,6 +19,10 @@ public class Workout extends ParseObject {
     public static final String KEY_CATEGORY = "exCategory";
     public static final String KEY_EQUIPMENT = "exEquipment";
     public static final String KEY_USER = "user";
+    public static final String KEY_PRIMARY = "exPrimary";
+    public static final String KEY_SECONDARY= "exSecondary";
+
+
 
     public ParseUser getUser () {
         return getParseUser(KEY_USER);
@@ -38,6 +42,13 @@ public class Workout extends ParseObject {
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
     }
+    public String getPrimary() {
+        return getString(KEY_PRIMARY);
+    }
+    public String getSecondary() {
+        return getString(KEY_SECONDARY);
+    }
+
 
 
 
