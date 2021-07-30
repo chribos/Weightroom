@@ -1,5 +1,7 @@
 package com.codepath.Weightroom.ui.login;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -26,6 +28,7 @@ public class DetailsActivity extends AppCompatActivity {
     TextView exSecondary;
     ImageView ivPrimary;
     ImageView ivSecondary;
+
     public static final String TAG = "DetailsActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,9 @@ public class DetailsActivity extends AppCompatActivity {
             exEquipment.setText("Equipment: " + exercise.getExEquipment());
             exPrimary.setText(exercise.getExPrimary());
             exSecondary.setText(exercise.getExSecondary());
+            Glide.with(this).load(Uri.parse(exercise.getExPrimaryPath())).disallowHardwareConfig().override(100, 200).into(ivPrimary);
+//            Glide.with(DetailsActivity.this).load(exercise.getExSecondaryPath()).disallowHardwareConfig().override(100, 200).into(ivSecondary);
+
         } else {
             Log.d(TAG, String.format("Showing details for %s", workout.getDescription()));
 

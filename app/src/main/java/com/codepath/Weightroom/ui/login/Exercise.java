@@ -26,6 +26,8 @@ public class Exercise {
     String exCategory;
     String exPrimary;
     String exSecondary;
+    String primaryPath;
+    String secondaryPath;
     ArrayList<String> equip;
 
     public Exercise() {}
@@ -33,6 +35,14 @@ public class Exercise {
         exTitle = exercise.getString("name");
         exDescription = exercise.getString("description");
         exCategory = exercise.getJSONObject("category").getString("name");
+
+        if(exercise.getJSONArray("muscles").length()>0) {
+            primaryPath = "https://wger.de/" + exercise.getJSONArray("muscles").getJSONObject(0).getString("image_url_main");
+        }else {primaryPath= "";}
+
+        if(exercise.getJSONArray("muscles_secondary").length()>0) {
+            secondaryPath = "https://wger.de/" + exercise.getJSONArray("muscles_secondary").getJSONObject(0).getString("image_url_main");
+        }else {secondaryPath= "";}
 
         //primary muscle call
         if(exercise.getJSONArray("muscles").length()>0) {
@@ -44,7 +54,7 @@ public class Exercise {
             exSecondary = "Secondary muscle worked:" + exercise.getJSONArray("muscles_secondary").getJSONObject(0).getString("name");
         } else {exSecondary = "";}
 
-
+        //equipment call where the equipment object cant be empty or only include bodyweight
         equip = new ArrayList<String>();
         JSONArray equipArray = exercise.getJSONArray("equipment");
         if (equipArray.length()> 0 &&
@@ -74,7 +84,7 @@ public class Exercise {
         for(String equipment : equip){
 
             //append ArrayList element followed by comma
-            sbString.append(equipment).append(",");
+            sbString.append(equipment).append("/");
         }
 
         //convert StringBuffer to String
@@ -106,6 +116,13 @@ public class Exercise {
 
     public String getExCategory() {
         return exCategory;
+    }
+
+    public String getExPrimaryPath() {
+        return primaryPath;
+    }
+    public String getExSecondaryPath() {
+        return primaryPath;
     }
 
 

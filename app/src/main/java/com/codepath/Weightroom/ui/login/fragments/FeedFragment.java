@@ -15,7 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 import com.codepath.Weightroom.R;
 import com.codepath.Weightroom.ui.login.Equipment;
@@ -23,6 +25,7 @@ import com.codepath.Weightroom.ui.login.Exercise;
 import com.codepath.Weightroom.ui.login.ExercisesAdapter;
 
 import com.codepath.Weightroom.ui.login.LoginActivity;
+import com.codepath.Weightroom.ui.login.RegisterActivity;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.parse.FindCallback;
@@ -50,6 +53,7 @@ public class FeedFragment extends Fragment {
     public RecyclerView rvExercises;
     public List userEquipment;
     public Button exLogout;
+    public Switch switchRecommended;
 
     //2 is the id for the english language, 1 for german
     public static final String LANGUAGE_KEY =  String.valueOf(2) ;
@@ -113,6 +117,7 @@ public class FeedFragment extends Fragment {
         homeIcon = view.findViewById(R.id.homeIcon);
         rvExercises = view.findViewById(R.id.rvExercises);
         exLogout = view.findViewById(R.id.exLogout);
+        switchRecommended = view.findViewById(R.id.switchRecommended);
 
         // initialize the array that will hold exercises and create a PostsAdapter
         allExercises = new ArrayList<>();
@@ -155,10 +160,40 @@ public class FeedFragment extends Fragment {
         });
 
         asyncCall();
+
+        //when switch is checked
+        switchRecommended.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // do something, the isChecked will be
+                // true if the switch is in the On position
+                Log.i("switch", "switch clicked!");
+                allExercises.clear();
+                ExercisesAdapter.notifyDataSetChanged();
+                //when switch is unchecked
+                if (!switchRecommended.isChecked()){
+                    // do something, the isChecked will be
+                    // true if the switch is in the On position
+                    Log.i("switch", "switch turned off");
+                    asyncCall();
+                }
+            }
+        });
+
+        //when switch is unchecked
+       if (switchRecommended.isPressed()){
+                // do something, the isChecked will be
+                // true if the switch is in the On position
+                Log.i("switch", "switch turned off");
+           ExercisesAdapter = new ExercisesAdapter(getContext(), allExercises);
+                rvExercises.setAdapter(ExercisesAdapter);
+            }
+
         // set the layout manager on the recycler view
         rvExercises.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }
+
+    //makes sure exercises on homeFeed contain user's equipment
     protected void asyncCall() {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(EXERCISE_INFO_URL, new JsonHttpResponseHandler() {
@@ -180,7 +215,6 @@ public class FeedFragment extends Fragment {
                             }
                         }
                     }
-
                     ExercisesAdapter.notifyDataSetChanged();
                     Log.i(TAG, "Exercises" + allExercises.size());
                 } catch (JSONException e) {
@@ -188,7 +222,6 @@ public class FeedFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onFailure(int i, Headers headers, String s, Throwable throwable) {
                 Log.d(TAG, "onFailure");

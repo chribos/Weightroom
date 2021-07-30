@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -91,6 +92,8 @@ public class CurrentAdapter extends RecyclerView.Adapter<CurrentAdapter.ViewHold
                 @Override
                 public boolean onLongClick(View v) {
                     Log.i("Adapter", "item has been long-clicked");
+                    Toast.makeText(context, "Item removed", Toast.LENGTH_SHORT).show();
+
                     workout.deleteInBackground();
                     workout.saveInBackground();
                     notifyDataSetChanged();

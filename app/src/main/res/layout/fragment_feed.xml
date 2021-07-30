@@ -18,32 +18,16 @@
         tools:src="@drawable/weightroomlogo"
         tools:visibility="visible" />
 
-    <Button
-        android:id="@+id/exRecommended"
-        android:layout_width="69dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="Button" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer"
-        android:layout_width="407dp"
-        android:layout_height="652dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvExercises"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginBottom="-1dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvExercises"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:padding="8dp" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        android:layout_marginTop="120dp"
+        android:padding="8dp" />
 
     <Button
         android:id="@+id/exLogout"
@@ -57,5 +41,17 @@
         android:layout_marginEnd="2dp"
         android:text="logout"
         android:textSize="8sp" />
+
+    <Switch
+        android:id="@+id/switchRecommended"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="142dp"
+        android:layout_marginTop="79dp"
+        android:text="Recommended"
+        android:textStyle="bold" />
 
 </RelativeLayout>
