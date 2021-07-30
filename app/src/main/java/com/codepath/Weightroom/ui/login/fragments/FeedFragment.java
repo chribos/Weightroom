@@ -170,6 +170,7 @@ public class FeedFragment extends Fragment {
                 Log.i("switch", "switch clicked!");
                 allExercises.clear();
                 ExercisesAdapter.notifyDataSetChanged();
+                //suggestion algorithm
 
                 //when switch is unchecked
                 if (!switchRecommended.isChecked()){

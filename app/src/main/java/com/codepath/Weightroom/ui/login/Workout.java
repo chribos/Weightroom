@@ -23,6 +23,7 @@ public class Workout extends ParseObject {
     public static final String KEY_SECONDARY= "exSecondary";
     public static final String KEY_PRIMARY_URL = "primaryURL";
     public static final String KEY_SECONDARY_URL= "secondaryURL";
+    public static final String KEY_IS_RECOMMENDED = "isRecommended";
 
 
 
@@ -57,7 +58,13 @@ public class Workout extends ParseObject {
     public String getSecondaryUrl() {
         return getString(KEY_SECONDARY_URL);
     }
+    public boolean getIsRecommended() {
+        return getBoolean(KEY_IS_RECOMMENDED);
+    }
 
+    public void setIsRecommended (boolean bool) {
+        put(KEY_IS_RECOMMENDED, bool);
+    }
 
 
 

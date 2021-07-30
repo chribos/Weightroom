@@ -75,7 +75,6 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
 
         private TextView exTitle;
         private TextView exEquipment;
-        private LinearLayout tvMedia;
         private TextView exCategory;
 
 
@@ -85,10 +84,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
             super(itemView);
             exTitle = itemView.findViewById(R.id.exTitle);
             exEquipment = itemView.findViewById(R.id.exEquipment);
-            tvMedia = itemView.findViewById(R.id.tvMedia);
             exCategory = itemView.findViewById(R.id.exCategory);
-
-
         }
 
         public void bind(Exercise exercise) {
@@ -96,9 +92,6 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
             exTitle.setText(exercise.getExTitle());
             exEquipment.setText("Equipment: "+exercise.getExEquipment());
             exCategory.setText("Category: "+ exercise.getExCategory());
-
-//            //query workouts to check for duplicates after longClick
-//            queryWorkouts();
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -162,6 +155,8 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
         ParseQuery<Workout> query = ParseQuery.getQuery(Workout.class);
         // include data referred by user key
         query.include(Workout.KEY_USER);
+        //query where isRecommended is false
+        query.whereEqualTo(Workout.KEY_IS_RECOMMENDED, false);
         // limit query to latest 20 items
         query.setLimit(20);
         // order posts by creation date (newest first)

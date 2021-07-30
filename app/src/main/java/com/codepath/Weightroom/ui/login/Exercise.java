@@ -29,6 +29,9 @@ public class Exercise {
     String primaryPath;
     String secondaryPath;
     ArrayList<String> equip;
+    //TODO: make base url string to reuse
+    //TODO: make muscles string to reuse
+
 
     public Exercise() {}
     public Exercise(JSONObject exercise) throws JSONException {
@@ -38,16 +41,19 @@ public class Exercise {
 
         if(exercise.getJSONArray("muscles").length()>0 && exercise.getJSONArray("muscles").getJSONObject(0).length()>0) {
             primaryPath = "https://wger.de/" + exercise.getJSONArray("muscles").getJSONObject(0).getString("image_url_main");
-        }else {primaryPath= "";}
+        }
+        else {primaryPath= "";}
 
         if(exercise.getJSONArray("muscles_secondary").length()>0 && exercise.getJSONArray("muscles_secondary").getJSONObject(0).length()>0) {
             secondaryPath = "https://wger.de/" + exercise.getJSONArray("muscles_secondary").getJSONObject(0).getString("image_url_main");
-        }else {secondaryPath= "";}
+        }
+        else {secondaryPath= "";}
 
         //primary muscle call
         if(exercise.getJSONArray("muscles").length()>0) {
             exPrimary = "Primary muscle worked: " + exercise.getJSONArray("muscles").getJSONObject(0).getString("name") +"\n";
-        } else {exPrimary = "";}
+        }
+        else {exPrimary = "";}
 
         //secondary muscle call
         if(exercise.getJSONArray("muscles_secondary").length()>0) {
@@ -58,7 +64,7 @@ public class Exercise {
         equip = new ArrayList<String>();
         JSONArray equipArray = exercise.getJSONArray("equipment");
         if (equipArray.length()> 0 &&
-                (exercise.getJSONArray("equipment").getJSONObject(0).getInt("id")) != 7) {
+                (exercise.getJSONArray("equipment").getJSONObject(0).getInt("id") != 7)) {
             for (int i = 0; i < equipArray.length(); i++) {
                 equip.add(exercise.getJSONArray("equipment").getJSONObject(i).getString("name"));
             }
@@ -82,6 +88,9 @@ public class Exercise {
 
         //iterate through ArrayList
         for(String equipment : equip){
+            if(equipment.equals( "none (bodyweight exercise)")) {
+                equipment = "Bodyweight exercise";
+            }
 
             //append ArrayList element followed by comma
             sbString.append(equipment).append("/");
