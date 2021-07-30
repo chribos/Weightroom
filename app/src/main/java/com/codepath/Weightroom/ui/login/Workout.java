@@ -21,6 +21,9 @@ public class Workout extends ParseObject {
     public static final String KEY_USER = "user";
     public static final String KEY_PRIMARY = "exPrimary";
     public static final String KEY_SECONDARY= "exSecondary";
+    public static final String KEY_PRIMARY_URL = "primaryURL";
+    public static final String KEY_SECONDARY_URL= "secondaryURL";
+
 
 
 
@@ -47,6 +50,12 @@ public class Workout extends ParseObject {
     }
     public String getSecondary() {
         return getString(KEY_SECONDARY);
+    }
+    public String getPrimaryUrl() {
+        return getString(KEY_PRIMARY_URL);
+    }
+    public String getSecondaryUrl() {
+        return getString(KEY_SECONDARY_URL);
     }
 
 

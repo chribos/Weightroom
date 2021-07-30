@@ -36,11 +36,11 @@ public class Exercise {
         exDescription = exercise.getString("description");
         exCategory = exercise.getJSONObject("category").getString("name");
 
-        if(exercise.getJSONArray("muscles").length()>0) {
+        if(exercise.getJSONArray("muscles").length()>0 && exercise.getJSONArray("muscles").getJSONObject(0).length()>0) {
             primaryPath = "https://wger.de/" + exercise.getJSONArray("muscles").getJSONObject(0).getString("image_url_main");
         }else {primaryPath= "";}
 
-        if(exercise.getJSONArray("muscles_secondary").length()>0) {
+        if(exercise.getJSONArray("muscles_secondary").length()>0 && exercise.getJSONArray("muscles_secondary").getJSONObject(0).length()>0) {
             secondaryPath = "https://wger.de/" + exercise.getJSONArray("muscles_secondary").getJSONObject(0).getString("image_url_main");
         }else {secondaryPath= "";}
 
@@ -122,7 +122,7 @@ public class Exercise {
         return primaryPath;
     }
     public String getExSecondaryPath() {
-        return primaryPath;
+        return secondaryPath;
     }
 
 

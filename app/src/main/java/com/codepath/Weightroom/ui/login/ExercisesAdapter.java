@@ -120,6 +120,9 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
                     workoutClass.put("user", ParseUser.getCurrentUser());
                     workoutClass.put("exPrimary", exercise.getExPrimary());
                     workoutClass.put("exSecondary", exercise.getExSecondary());
+                    workoutClass.put("primaryURL", exercise.getExPrimaryPath());
+                    workoutClass.put("secondaryURL", exercise.getExSecondaryPath());
+
 
 
                     workoutClass.saveInBackground(new SaveCallback() {

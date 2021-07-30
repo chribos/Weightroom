@@ -1,5 +1,6 @@
 package com.codepath.Weightroom.ui.login.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -169,24 +170,18 @@ public class FeedFragment extends Fragment {
                 Log.i("switch", "switch clicked!");
                 allExercises.clear();
                 ExercisesAdapter.notifyDataSetChanged();
+
                 //when switch is unchecked
                 if (!switchRecommended.isChecked()){
                     // do something, the isChecked will be
                     // true if the switch is in the On position
                     Log.i("switch", "switch turned off");
+                    //repopulate recycle view
                     asyncCall();
                 }
             }
         });
 
-        //when switch is unchecked
-       if (switchRecommended.isPressed()){
-                // do something, the isChecked will be
-                // true if the switch is in the On position
-                Log.i("switch", "switch turned off");
-           ExercisesAdapter = new ExercisesAdapter(getContext(), allExercises);
-                rvExercises.setAdapter(ExercisesAdapter);
-            }
 
         // set the layout manager on the recycler view
         rvExercises.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -195,6 +190,11 @@ public class FeedFragment extends Fragment {
 
     //makes sure exercises on homeFeed contain user's equipment
     protected void asyncCall() {
+        ProgressDialog progress = new ProgressDialog(getContext());
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while getting exercises...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+        progress.show();
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(EXERCISE_INFO_URL, new JsonHttpResponseHandler() {
             @Override
@@ -216,6 +216,7 @@ public class FeedFragment extends Fragment {
                         }
                     }
                     ExercisesAdapter.notifyDataSetChanged();
+                    progress.hide();
                     Log.i(TAG, "Exercises" + allExercises.size());
                 } catch (JSONException e) {
                     Log.e(TAG, "Hit json exception", e);

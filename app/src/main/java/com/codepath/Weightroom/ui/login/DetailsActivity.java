@@ -1,6 +1,8 @@
 package com.codepath.Weightroom.ui.login;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.codepath.Weightroom.R;
+import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.parse.ParseFile;
 
 import org.parceler.Parcels;
@@ -40,13 +43,14 @@ public class DetailsActivity extends AppCompatActivity {
         exEquipment = findViewById(R.id.exEquipment);
         exPrimary = findViewById(R.id.exPrimary);
         exSecondary = findViewById(R.id.exSecondary);
-        ivPrimary = findViewById(R.id.ivPrimary);
-        ivSecondary = findViewById(R.id.ivSecondary);
+        ivPrimary = (ImageView) findViewById(R.id.ivPrimary);
+        ivSecondary = (ImageView) findViewById(R.id.ivSecondary);
 
         workout = Parcels.unwrap(getIntent().getParcelableExtra("w"));
         exercise = Parcels.unwrap(getIntent().getParcelableExtra("e"));
         if (exercise != null) {
             Log.d(TAG, String.format("Showing details for %s", exercise.getExDescription()));
+
 
             exTitle.setText(exercise.getExTitle());
             Log.i(TAG, "problem" + exercise.getExTitle());
@@ -54,8 +58,15 @@ public class DetailsActivity extends AppCompatActivity {
             exEquipment.setText("Equipment: " + exercise.getExEquipment());
             exPrimary.setText(exercise.getExPrimary());
             exSecondary.setText(exercise.getExSecondary());
-            Glide.with(this).load(Uri.parse(exercise.getExPrimaryPath())).disallowHardwareConfig().override(100, 200).into(ivPrimary);
-//            Glide.with(DetailsActivity.this).load(exercise.getExSecondaryPath()).disallowHardwareConfig().override(100, 200).into(ivSecondary);
+
+            Log.i("PrimaryURL", exercise.getExPrimaryPath());
+            Log.i("SecondaryURL", exercise.getExSecondaryPath());
+
+            //third-party library for .svg functionality for Glide.
+            GlideToVectorYou.justLoadImage(DetailsActivity.this, Uri.parse(exercise.getExPrimaryPath()), ivPrimary);
+            GlideToVectorYou.justLoadImage(DetailsActivity.this, Uri.parse(exercise.getExSecondaryPath()), ivSecondary);
+
+;
 
         } else {
             Log.d(TAG, String.format("Showing details for %s", workout.getDescription()));
@@ -66,6 +77,10 @@ public class DetailsActivity extends AppCompatActivity {
             exEquipment.setText("Equipment: " + workout.getEquipment());
             exPrimary.setText(workout.getPrimary());
             exSecondary.setText(workout.getSecondary());
+            GlideToVectorYou.justLoadImage(DetailsActivity.this, Uri.parse(workout.getPrimaryUrl()), ivPrimary);
+            GlideToVectorYou.justLoadImage(DetailsActivity.this, Uri.parse(workout.getSecondaryUrl()), ivSecondary);
+
+
         }
         getSupportActionBar().hide();
 
