@@ -2,6 +2,7 @@ package com.codepath.Weightroom.ui.login.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +29,10 @@ import com.codepath.Weightroom.ui.login.ExercisesAdapter;
 
 import com.codepath.Weightroom.ui.login.LoginActivity;
 import com.codepath.Weightroom.ui.login.RegisterActivity;
+import com.codepath.Weightroom.ui.login.Workout;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.parse.CountCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -40,6 +44,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import okhttp3.Headers;
@@ -55,6 +61,7 @@ public class FeedFragment extends Fragment {
     public List userEquipment;
     public Button exLogout;
     public Switch switchRecommended;
+    protected List<Workout> recommendedWorkouts;
 
     //2 is the id for the english language, 1 for german
     public static final String LANGUAGE_KEY =  String.valueOf(2) ;
@@ -70,14 +77,12 @@ public class FeedFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public FeedFragment() {
         // Required empty public constructor
     }
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -86,7 +91,6 @@ public class FeedFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment FeedFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static FeedFragment newInstance(String param1, String param2) {
         FeedFragment fragment = new FeedFragment();
         Bundle args = new Bundle();
@@ -95,7 +99,6 @@ public class FeedFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,6 +123,8 @@ public class FeedFragment extends Fragment {
         exLogout = view.findViewById(R.id.exLogout);
         switchRecommended = view.findViewById(R.id.switchRecommended);
 
+        recommendedWorkouts = new ArrayList<>();
+
         // initialize the array that will hold exercises and create a PostsAdapter
         allExercises = new ArrayList<>();
         ExercisesAdapter = new ExercisesAdapter(getContext(), allExercises);
@@ -141,13 +146,10 @@ public class FeedFragment extends Fragment {
                 Log.i(TAG, "equipment: " + posts.get(0).getEquipment().toString());
             }
         });
-
-
         // set the adapter on the recycler view of exercises that contain user's equipment
         rvExercises.setAdapter(ExercisesAdapter);
 
         exLogout.setOnClickListener(new View.OnClickListener()
-
         {
             @Override
             public void onClick(View v) {
@@ -159,7 +161,6 @@ public class FeedFragment extends Fragment {
 
             }
         });
-
         asyncCall();
 
         //when switch is checked
@@ -170,8 +171,11 @@ public class FeedFragment extends Fragment {
                 Log.i("switch", "switch clicked!");
                 allExercises.clear();
                 ExercisesAdapter.notifyDataSetChanged();
-                //suggestion algorithm
-
+                try {
+                    asyncRecommendedCall();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 //when switch is unchecked
                 if (!switchRecommended.isChecked()){
                     // do something, the isChecked will be
@@ -182,11 +186,8 @@ public class FeedFragment extends Fragment {
                 }
             }
         });
-
-
         // set the layout manager on the recycler view
         rvExercises.setLayoutManager(new LinearLayoutManager(getContext()));
-
     }
 
     //makes sure exercises on homeFeed contain user's equipment
@@ -229,6 +230,83 @@ public class FeedFragment extends Fragment {
                 Log.d(TAG, "onFailure");
             }
         });
+    }
 
+    //find out users most common category
+    protected String getRecommendedCategory() throws ParseException {
+        List<Pair<String, Integer>> workoutPair = new ArrayList<>();
+
+        workoutPair.add(queryWhereEqual("Chest"));
+        workoutPair.add(queryWhereEqual("Arms"));
+        workoutPair.add(queryWhereEqual("Shoulders"));
+        workoutPair.add(queryWhereEqual("Legs"));
+        workoutPair.add(queryWhereEqual("Back"));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Collections.sort(workoutPair, Comparator.comparing(p -> -p.second));
+        }
+        Log.i("workoutPair", workoutPair.toString());
+        return workoutPair.get(0).first;
+    }
+
+    //this functions cuts down a ton of lines for getRecommendedCategory
+    protected Pair<String, Integer> queryWhereEqual(String category) throws ParseException {
+        ParseQuery<Workout> query = ParseQuery.getQuery(Workout.class);
+        // include data referred by user key
+        query.include(Workout.KEY_USER);
+        // limit query to latest 20 items
+        query.setLimit(20);
+        // order posts by creation date (newest first)
+        query.addDescendingOrder("createdAt");
+        query.whereEqualTo("exCategory", category);
+        query.whereEqualTo("exCategory", category);
+        // start an asynchronous call for posts
+        return new Pair(category, query.count());
+    }
+
+    //filter for the user's most common category
+    protected void asyncRecommendedCall() throws ParseException {
+        String recommendedCategory = getRecommendedCategory();
+        ProgressDialog progress = new ProgressDialog(getContext());
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while getting exercises...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+        progress.show();
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(EXERCISE_INFO_URL, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Headers headers, JSON json) {
+                Log.d(TAG, "Recommended onSuccess");
+                JSONObject jsonObject= json.jsonObject;
+                try {
+                    JSONArray results = jsonObject.getJSONArray("results");
+                    Log.d(TAG, "Recommended results:" +results);
+                    //only adds exercises that contain the user's equipment
+                    for(int k =0; k<Exercise.fromJsonArray(results).size(); k++) {
+                        for (int j = 0; j < userEquipment.size(); j++) {
+                            Log.i(TAG, "eq check" + userEquipment.get(j).toString());
+                            if (Exercise.fromJsonArray(results).get(k).getExEquipment().contains(userEquipment.get(j).toString())) {
+                                //matching category parameter
+                                if(Exercise.fromJsonArray(results).get(k).getExCategory().equals(recommendedCategory)) {
+                                    allExercises.add(Exercise.fromJsonArray(results).get(k));
+                                    Log.i(TAG, "filtered recommended exercises" + allExercises);
+                                    Log.i(TAG, "RecommendedCategoryResults" + Exercise.fromJsonArray(results).get(0).getExCategory());
+                                }
+                            }
+                        }
+                    }
+                    ExercisesAdapter.notifyDataSetChanged();
+                    progress.hide();
+                    Log.i(TAG, "Exercises" + allExercises.size());
+                } catch (JSONException e) {
+                    Log.e(TAG, "Hit json exception", e);
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(int i, Headers headers, String s, Throwable throwable) {
+                Log.d(TAG, "onFailure");
+            }
+        });
     }
 }
