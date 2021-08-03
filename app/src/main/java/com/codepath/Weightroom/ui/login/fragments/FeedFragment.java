@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 
@@ -59,7 +60,7 @@ public class FeedFragment extends Fragment {
     protected List<Exercise> allExercises;
     public RecyclerView rvExercises;
     public List userEquipment;
-    public Button exLogout;
+    public ImageButton exLogout;
     public Switch switchRecommended;
     protected List<Workout> recommendedWorkouts;
 
@@ -67,7 +68,7 @@ public class FeedFragment extends Fragment {
     public static final String LANGUAGE_KEY =  String.valueOf(2) ;
     //create instance variable for language [readability]
     public static final String EXERCISE_INFO_URL =
-            "https://wger.de/api/v2/exerciseinfo/?format=json&language="+LANGUAGE_KEY +"&limit=40";
+            "https://wger.de/api/v2/exerciseinfo/?format=json&language="+LANGUAGE_KEY +"&limit=50";
 
     private String TAG = "FeedFragment";
     protected ExercisesAdapter ExercisesAdapter;
@@ -254,6 +255,7 @@ public class FeedFragment extends Fragment {
         ParseQuery<Workout> query = ParseQuery.getQuery(Workout.class);
         // include data referred by user key
         query.include(Workout.KEY_USER);
+        query.whereEqualTo(Equipment.KEY_USER, ParseUser.getCurrentUser());
         // limit query to latest 20 items
         query.setLimit(20);
         // order posts by creation date (newest first)
