@@ -31,13 +31,13 @@
 * [x] On login/registration they are prompted to input their equipment (not prompted everytime they login)
 * [x] Users can go to their profile and edit their equipment list
 * [x] Users are prompted ONLY once on login/registration to enter equipment
-* [ ] Current exercise list that incorporates long click gesture for both home feed and current list feed to add/remove exercises
+* [x] Current exercise list that incorporates long click gesture for both home feed and current list feed to add/remove exercises
 
 **Optional Nice-to-have Stories**
 
 * [x] Customized icon displayed in action bar
-* [ ] Recommendation Algorithm for exercise selection based off of current exercises
-* [ ] Progress Bar (Clean animation) while data is being fetched
+* [x] Recommendation Algorithm for exercise selection based off of current exercises
+* [x] Progress Bar (Clean animation) while data is being fetched
 * [ ] binding library
 * [ ] profile picture upload
 
@@ -55,15 +55,21 @@
 * Home screen (Recycler View, linear)
    * View exercises unique to the user based on their equipment
    * Hold down exercises on the view to add them to a list of current exercises
+ * Recommended screen (Recycler View, linear)
+   * View exercises unique to the user based on their equipment and recommended category
+   * Hold down exercises on the view to add them to a list of current exercises
+   * activated by a switch that the user selects
 * Detail Screen
     *  Display muscles worked, equipment required, and description of the exercise movement. 
+* Current exercise screen
+    *  View exercises that the user has saved (including detail view). 
 
 
 ### 3. Navigation
 
 **Tab Navigation** (Tab to Screen)
 
-* Home page
+* Home page/Recommendation page
 * Current exercises
 * Profile
 
@@ -74,13 +80,13 @@
 
 * Prompt screen
    * Allow user to input their equipment
-* Stream Screen 
+* Stream Screen of home/recommended
    * Details: Muscles developed/worked, equipment, description of how to perform the movement
 * Current Exercise Screen 
     * list of exercises that user has selected to add to their current exercise list
 
 ## Wireframes
-  [Barebones sketch since digital, will be polished with images in actual app]
+  [Barebones sketch since digital, will be polished with images in actual app] [Does not include recommended page which was implemented later as a stretch]
 <img src= https://i.imgur.com/plzjdLI.png
  width=600>
 
@@ -97,16 +103,44 @@ Figma includes digital wirefram/mockup as well as interactive prototype: https:/
    | ------------- | -------- | ------------|
    | objectId      | String   | unique id for the user post (default field) |
    | user          | Pointer to User| image author |
-   | equpment      | Array    | list of equipment the user has access to |
+   | equipment      | Array    | list of equipment the user has access to |
    | createdAt     | DateTime | date when post is created (default field) |
    | updatedAt     | DateTime | date when post is last updated (default field) |
+
+#### Workout
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user post (default field) |
+   | user          | Pointer to User| image author |
+   | exEquipment      | Array    | list of equipment the user has access to |
+   | exTitle      | String    | title of exercise |
+   | exCategory     | String    | category of exercise |
+   | exDescription     | String    | description of exercise |
+   | exPrimary      | String    | primary muscle trained of exercise |
+   | exSecondary      | String    | secondary muscle trained of exercise |
+   | primaryURL      | String    | image url path of primary muscle trained for the exercise |
+   | secondaryURL      | String    | image url path of secondary muscle trained for the exercise |
+   | createdAt     | DateTime | date when post is created (default field) |
+   | updatedAt     | DateTime | date when post is last updated (default field) |
+   
 ### Networking
 * HomeFeed
     * (READ/GET) Read the latest equipment object that is stored for the user
     * ![](https://i.imgur.com/SnS7Ssk.png)
+* RecommendedFeed
+    * (READ/GET) (Create/POST) Read the latest equipment object that is stored for the user and POST user's most recomended category to API handler to filter
+    * ![image](https://user-images.githubusercontent.com/52644842/127957522-9f83eb2a-150e-493b-8c40-87822cc4ce86.png)
+    * ![image](https://user-images.githubusercontent.com/52644842/127957564-393fbf54-8973-4b56-9d35-af0e1a6a46ec.png)
+    * ![](https://i.imgur.com/SnS7Ssk.png)
 * PromptScreen
-    * (Create/POST) Create a new equipment list for the user
+    * (CREATE/POST) Create a new equipment list for the user
     * ![](https://i.imgur.com/U3pEKP6.png)
+* CurrentFeed
+  * (READ/GET)/(CREATE/POST) Current workouts stored in Parse
+  * ![image](https://user-images.githubusercontent.com/52644842/127957290-085a32c2-ce58-4fa7-853d-37be18bf4d22.png)
+  * ![image](https://user-images.githubusercontent.com/52644842/127957394-8ece7feb-6d23-47a1-be0f-4cde4969dd96.png)
+
 
 * ProfileScreen 
 
