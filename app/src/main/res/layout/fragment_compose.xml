@@ -7,6 +7,21 @@
     tools:context=".ui.login.fragments.ComposeFragment">
 
 
+    <ImageButton
+        android:id="@+id/exLogout"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="339dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="2dp"
+        android:backgroundTint="#00FFFFFF"
+        android:src="@drawable/ic_baseline_logout_24"
+        android:text="logout"
+        android:textSize="8sp" />
+
     <ImageView
         android:id="@+id/homeIcon"
         android:layout_width="266dp"
@@ -35,14 +50,5 @@
             android:layout_centerInParent="true"
             android:padding="8dp" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <Button
-        android:id="@+id/exLogout"
-        android:layout_width="74dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:text="logout "
-        android:textSize="8sp" />
 
 </RelativeLayout>

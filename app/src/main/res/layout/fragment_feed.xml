@@ -29,7 +29,7 @@
         android:layout_marginTop="120dp"
         android:padding="8dp" />
 
-    <Button
+    <ImageButton
         android:id="@+id/exLogout"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
@@ -39,6 +39,8 @@
         android:layout_marginStart="339dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="2dp"
+        android:backgroundTint="#00FFFFFF"
+        android:src="@drawable/ic_baseline_logout_24"
         android:text="logout"
         android:textSize="8sp" />
 

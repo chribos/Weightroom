@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,10 +51,10 @@ public class ProfileFragment extends Fragment {
 
 
     protected TextView exUsername;
-    protected Button exLogout;
+    protected ImageButton exLogout;
     protected CircleImageView ivProfile;
     protected  TextView eqList;
-    protected Button exEdit;
+    protected ImageButton exEdit;
 
 
     protected com.codepath.Weightroom.ui.login.ExercisesAdapter ExercisesAdapter;

@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -63,7 +64,7 @@ import static android.app.Activity.RESULT_OK;
 public class ComposeFragment extends Fragment {
     protected List<Workout> allWorkouts;
     public RecyclerView exCurrent;
-    public Button exLogout;
+    public ImageButton exLogout;
     private SwipeRefreshLayout swipeContainer;
 
 
@@ -169,6 +170,7 @@ public class ComposeFragment extends Fragment {
         ParseQuery<Workout> query = ParseQuery.getQuery(Workout.class);
         // include data referred by user key
         query.include(Workout.KEY_USER);
+        query.whereEqualTo(Equipment.KEY_USER, ParseUser.getCurrentUser());
         // limit query to latest 20 items
         query.setLimit(20);
         // order posts by creation date (newest first)
@@ -182,12 +184,10 @@ public class ComposeFragment extends Fragment {
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
                 }
-
                 // for debugging purposes let's print every post description to logcat
                 for (Workout workout : workouts) {
                     Log.i(TAG, "Post: " + workout.getDescription() + ", username: " + workout.getUser().getUsername());
                 }
-
                 // save received posts to list and notify adapter of new data
                 allWorkouts.addAll(workouts);
                 CurrentAdapter.notifyDataSetChanged();

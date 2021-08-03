@@ -95,11 +95,15 @@
     <Button
         android:id="@+id/btnAdd"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
+        android:layout_below="@+id/cb2"
+        android:layout_alignStart="@+id/cb2"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="234dp"
-        android:layout_marginBottom="130dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="252dp"
+        android:layout_marginBottom="148dp"
         android:text="submit" />
 
     <Button

@@ -34,7 +34,7 @@ public class PermaPromptActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.perma_prompt);
+        setContentView(R.layout.activity_prompt);
 
         getSupportActionBar().hide();
 
