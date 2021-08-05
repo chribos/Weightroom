@@ -8,7 +8,7 @@
 
 ## Overview
 ### Description
-**Weightroom** will offer users substitute exercises with the equipment that the users have access to in order to hit the muscle group/category [arms,shoulders,etc.] that they would have missed hitting otherwise. Many people have ran into the problem of not having access to the equipment that an exercise calls for so they just dont hit that muscle group for the day.
+**Weightroom** will offer users substitute exercises with the equipment that the users have access to in order to hit the muscle group/category [arms,shoulders,etc.] that they would have missed hitting otherwise. Many people have ran into the problem of not having access to the equipment that an exercise calls for so they just dont hit that muscle group for the day. Weightroom provides users with great substitute exercises that target the same muscle group and provides them with instructions on how to perform the movement as well as the primary/secondary muscles it tagets. 
 ### App Evaluation
 [Evaluation of your app across the following attributes]
 - **Category: Health/Fitness**
