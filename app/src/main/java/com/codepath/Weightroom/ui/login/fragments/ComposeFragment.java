@@ -170,7 +170,7 @@ public class ComposeFragment extends Fragment {
         ParseQuery<Workout> query = ParseQuery.getQuery(Workout.class);
         // include data referred by user key
         query.include(Workout.KEY_USER);
-        query.whereEqualTo(Equipment.KEY_USER, ParseUser.getCurrentUser());
+        query.whereEqualTo(Workout.KEY_USER, ParseUser.getCurrentUser());
         // limit query to latest 20 items
         query.setLimit(20);
         // order posts by creation date (newest first)

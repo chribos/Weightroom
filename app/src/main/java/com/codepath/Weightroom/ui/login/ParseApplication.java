@@ -14,6 +14,7 @@ public class ParseApplication extends Application {
         //register past module "Post" that we just created
         ParseObject.registerSubclass(Workout.class);
         ParseObject.registerSubclass(Equipment.class);
+        ParseObject.registerSubclass(User.class);
 //        ParseObject.registerSubclass(Workout.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -26,9 +27,10 @@ public class PermaPromptActivity extends AppCompatActivity {
 
     public final String TAG = "promptActivity";
 
-    Button btnAdd,  selectAll, deselectAll;
+    Button selectAll, deselectAll;
     CheckBox cb1, cb2, cb3, cb4, cb5;
     ImageView selectImg;
+    ImageButton btnAdd;
 
 
     @Override
@@ -112,7 +114,7 @@ public class PermaPromptActivity extends AppCompatActivity {
                     return;
                 }
                 Log.i(TAG, "post saved!", e);
-                Toast.makeText(getBaseContext(), "Post saved!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Equipment saved!", Toast.LENGTH_SHORT).show();
 
 
 
