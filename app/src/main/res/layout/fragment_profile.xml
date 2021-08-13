@@ -76,7 +76,7 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_marginTop="79dp"
-        android:src="@drawable/shohei"
+        android:src="@drawable/ic_baseline_person_24"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"

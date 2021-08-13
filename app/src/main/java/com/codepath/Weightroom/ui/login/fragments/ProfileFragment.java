@@ -1,6 +1,7 @@
 package com.codepath.Weightroom.ui.login.fragments;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -123,6 +124,9 @@ public class ProfileFragment extends Fragment {
 
         String currentUsername = ParseUser.getCurrentUser().getUsername();
         exUsername.setText(currentUsername);
+        if (currentUsername == "ronniecoleman") {
+            ibProfile.setImageDrawable(Drawable.createFromPath("ronnie.jpg"));
+        }
 
         //queries for user's list of equipment specified from prompt
         ParseQuery<Equipment> query = ParseQuery.getQuery(Equipment.class);
